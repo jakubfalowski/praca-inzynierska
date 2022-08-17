@@ -5,7 +5,7 @@ import Fifa from './fifa';
 
 export function Index() {
     Forebet('Pogon Szczecin','Wisla Plock');
-    Fifa('Gabriel Jesus', 23);
+    Fifa('James Tarkowski', 13);
   }
 
 export default Index;
