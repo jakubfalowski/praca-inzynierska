@@ -69,7 +69,7 @@ let result;
             })
         }
         resolve(playerTab);
-        console.log(playerTab.length);
+        console.log(playerTab);
     })
 }
 
