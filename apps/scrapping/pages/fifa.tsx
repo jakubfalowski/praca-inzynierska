@@ -1,18 +1,19 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
+import { resolve } from 'path/win32';
 
 let info;
 let result;
 
-export async function Fifa() {
+
     
     const playerTab = new Array(7);
-    for(let i=0;i<=7;i++) playerTab[i]=[];
+    for(let i=0;i<=7;i++) playerTab[i]=new Array(0);
 
-    let numberOfRow = 0;
+    const numberOfRow = 0;
     let numberOfPage = 1;
 
-    new Promise((resolve, reject) => {
+    export function Fifa(){ return new Promise((resolve, reject) => {
         for(numberOfPage; numberOfPage <= 14; numberOfPage++){
             axios.get(`https://www.futhead.com/21/players/?club=all&league=13&page=${numberOfPage}&level=all_nif&bin_platform=ps`).then((res) => {
                 const $ = cheerio.load(res.data);
@@ -67,20 +68,9 @@ export async function Fifa() {
                 })
             })
         }
-        console.log(playerTab)
         resolve(playerTab);
-    }).then((response) =>{
-        for(numberOfRow; numberOfRow < response[0].length; numberOfRow++){
-            console.log(info)
-            info += {"Zawdonik: ":response[0][numberOfRow],"ogólna ocena: ":response[1][numberOfRow],"szybkość: ":response[2][numberOfRow],"strzały: ":response[3][numberOfRow],
-            "podania: ":response[4][numberOfRow],"drybling: ":response[5][numberOfRow],"defensywa: ":response[6][numberOfRow],"fizyczność: ":response[7][numberOfRow]};
-        }
-        
-        // console.log(JSON.stringify(info))
+        console.log(playerTab.length);
     })
-
-    
-
-  }
+}
 
 export default Fifa;
