@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import Fifa from "../fifa";
 
+
+
 export default async function FifaAPI(req,res) {
     const results = await Fifa();
 
@@ -8,12 +10,19 @@ export default async function FifaAPI(req,res) {
     function timeToFetch() {
         if (results[0].length > 645){
             clearInterval(interval);
-            const json = results[0].map((row, index) => {
+
+            const playerStats = results[0].map((row, index) => {
                 return results.map((attributes) => {
                   return attributes[index]
                 })
-              })
-            res.json(json);
+              });
+
+              const jsonStats = playerStats.map((typeStat =>{
+                return {"pilkarz": typeStat[0], "ocena": typeStat[1], "szybkość": typeStat[2], "strzały":typeStat[3], "podania": typeStat[4], "drybling": typeStat[5], "defensywa": typeStat[6], "fizyczność":typeStat[7]}
+              }));
+
+            res.json(jsonStats);
         }
     }
 }
+

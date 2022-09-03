@@ -11,12 +11,17 @@ export function App() {
       console.log(error)
     }
 }
-console.log(info[0])
+
 fetchData()
   return (
-    <div>a {info && info.map(information =>{
-      <p>{information}</p>
-    })}</div>
+    <table>
+      <tr><td>Imie i nazwisko</td><td>Ocena ogólna</td></tr>
+      {info && info.map(information =>(
+        <tr>
+          <td>{information.pilkarz}</td>
+          <td>{information.ocena}</td>
+        </tr>
+    ))}</table>
   );
 }
 
