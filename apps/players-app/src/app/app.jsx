@@ -1,27 +1,51 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+let ifFetch = true;
 
 export function App() {
-  const [info, setInfo] = useState()
-  async function fetchData() {
+  const [playersFifa, setPlayersFifa] = useState()
+  const [playersFm, setPlayersFm] = useState()
+  async function fetchFifa() {
     try{
         const response = await fetch(`http://localhost:3000/api/fifa`);
         const data = await response.json();
-        setInfo(data);
+        setPlayersFifa(data);
     } catch(error){
       console.log(error)
     }
 }
+async function fetchFm() {
+  try{
+      const response = await fetch(`http://localhost:3000/api/fm`);
+      const data = await response.json();
+      setPlayersFm(data);
+  } catch(error){
+    console.log(error)
+  }
+}
 
-fetchData()
-  return (
+useEffect(() => {
+  fetchFifa();
+  fetchFm();
+}, [ifFetch]);
+
+
+  return (<>
     <table>
       <tr><td>Imie i nazwisko</td><td>Ocena ogólna</td></tr>
-      {info && info.map(information =>(
+      {playersFifa && playersFifa.map(information =>(
         <tr>
           <td>{information.pilkarz}</td>
           <td>{information.ocena}</td>
         </tr>
     ))}</table>
+    <table>
+      <tr><td>Imie i nazwisko</td><td>Ocena ogólna</td></tr>
+      {playersFm && playersFm.map(information =>(
+        <tr>
+          <td>{information.pilkarz}</td>
+          <td>{information.ocena}</td>
+        </tr>
+    ))}</table></>
   );
 }
 

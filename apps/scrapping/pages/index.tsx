@@ -7,7 +7,7 @@ import Fm from './fm';
 export function Index() {
     Forebet('Stal Mielec','Slask Wroclaw');
     Fifa();
-    Fm('Christian Pulisic');
+    Fm();
   }
 
 export default Index;

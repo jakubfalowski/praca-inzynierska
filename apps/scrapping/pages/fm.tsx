@@ -1,82 +1,66 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
 
-const nameTab = [];
-const attTab = [];
-const defTab = [];
-const techTab = [];
-const menTab = [];
-const phyTab = [];
-const speTab = [];
+const playerTab = new Array(7)
+for(let i=0;i<=7;i++) playerTab[i]=new Array(0);
 
-export function Fm(player){
+let numberOfPage = 0;
 
-let info = "Brak podanego zawodnika";
-let numberOfRow = 0;
-let i = 0;
+export default function Fm() { return new Promise((resolve, reject) => {
+    for(numberOfPage; numberOfPage <= 26; numberOfPage++){
+        axios.get(`https://fmdataba.com/21/l/2613/premier-league/best-players/${numberOfPage}`).then((res) => {
+            const $ = cheerio.load(res.data);
+            const playerName = $('a[title~=fm21] strong');
+            const overall = $('td:nth-of-type(7) .veri61');
+            const att = $('td:nth-of-type(8) .veri61');
+            const def = $('td:nth-of-type(9) .veri61');
+            const tech = $('td:nth-of-type(10) .veri61');
+            const men = $('td:nth-of-type(11) .veri61');
+            const phy = $('td:nth-of-type(12) .veri61');
+            const spe = $('td:nth-of-type(13) .veri61');
 
-for(i; i <= 26; i++) {adding(i); }
+            $(playerName).each((i ,el) => {
+                const item = $(el).text();
+            playerTab[0].push(item);
+            })
 
-function adding(numberOfPage) {
-    axios.get(`https://fmdataba.com/21/l/2613/premier-league/best-players/${numberOfPage}`).then((res) => {
-        const $ = cheerio.load(res.data);
-        const playerName = $('strong');
-        const att = $('.veri61');
-        const def = $('.veri61:nth-of-type(3)');
-        const tech = $('.veri61:nth-of-type(4)');
-        const men = $('.veri61:nth-of-type(5)');
-        const phy = $('.veri61:nth-of-type(6)');
-        const spe = $('.veri61:nth-of-type(7)');
+            $(overall).each((i ,el) => {
+                const item = $(el).text();
+                playerTab[1].push(item);
+            })
+            
+            $(att).each((i ,el) => {
+                const item = $(el).text();
+                playerTab[2].push(item);
+            })
 
-        $(playerName).each((i ,el) => {
-            const item = $(el).text();
-            nameTab.push(item);
+            $(def).each((i ,el) => {
+                const item = $(el).text();
+                playerTab[3].push(item);
+            })
+
+            $(tech).each((i ,el) => {
+                const item = $(el).text();
+                playerTab[4].push(item);
+            })
+
+            $(men).each((i ,el) => {
+                const item = $(el).text();
+                playerTab[5].push(item);
+            })
+
+            $(phy).each((i ,el) => {
+                const item = $(el).text();
+                playerTab[6].push(item);
+            })
+
+            $(spe).each((i ,el) => {
+                const item = $(el).text();
+                playerTab[7].push(item);
+            })
         })
-        
-        $(att).each((i ,el) => {
-            const item = $(el).text();
-            attTab.push(item);
-        })
-
-        $(def).each((i ,el) => {
-            const item = $(el).text();
-            defTab.push(item);
-        })
-
-        $(tech).each((i ,el) => {
-            const item = $(el).text();
-            techTab.push(item);
-        })
-
-        $(men).each((i ,el) => {
-            const item = $(el).text();
-            menTab.push(item);
-        })
-
-        $(phy).each((i ,el) => {
-            const item = $(el).text();
-            phyTab.push(item);
-        })
-
-        $(spe).each((i ,el) => {
-            const item = $(el).text();
-            speTab.push(item);
-        })
-    })
-
-    // eslint-disable-next-line no-inner-declarations
-    function setInfo(player){
-        setTimeout(function(){ 
-            if(nameTab.indexOf(player) > -1){
-                numberOfRow = nameTab.indexOf(player);
-                info = "Zawdonik: "+nameTab[numberOfRow]+", atak: "+attTab[numberOfRow]+", obrona "+defTab[numberOfRow]+", technika: "+techTab[numberOfRow]+", mental: "+menTab[numberOfRow]+", fizyczność: "+phyTab[numberOfRow]+", szybkość: "+speTab[numberOfRow];
-                console.log(info)
-            }
-            else info = 'Brak podanego zawodnika'
-        }, 3000);
     }
-    setInfo(player);
-  }
+        resolve(playerTab);
+        console.log(playerTab);
+    })
 }
-
-export default Fm;

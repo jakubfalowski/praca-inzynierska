@@ -1,12 +1,6 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
-import { resolve } from 'path/win32';
 
-let info;
-let result;
-
-
-    
     const playerTab = new Array(7);
     for(let i=0;i<=7;i++) playerTab[i]=new Array(0);
 
