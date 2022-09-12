@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
+import {sortByOverallDifference, sortByOverallFifa, sortByOverallFm} from "./sort";
+
 let ifFetch = true;
 
 export function App() {
   const [playersFifa, setPlayersFifa] = useState()
   const [playersFm, setPlayersFm] = useState()
-  const [sort, setSort] = useState()
-  const [order, setOrder] = useState("DSC")
-  const [listTab, setListTab] = useState()
   const [dataTest, setData] = useState()
+  const [userPlayers, setUserPlayers] = useState(10)
 
   async function fetchFifa() {
     try{
@@ -67,15 +67,12 @@ if(playersFifa && playersFm){
   }
 }
 
+let previousOverall = 100;
+let amountBetter = 0;
+let amountSame = 0;
+let amountWorse = 0;
 
-function sortFunction(a, b) {
-  if (a[1] === b[1]) {
-      return 0;
-  }
-  else {
-      return (a[1] < b[1]) ? -1 : 1;
-  }
-}
+let amount;
 
   return (
     <>
@@ -84,8 +81,24 @@ function sortFunction(a, b) {
       <tbody>
         <tr>
           <td rowSpan={2}>Imie i nazwisko</td>
-          <td>FIFA</td>
-          <td>FM</td>
+          <td>
+          <button onClick={() => {
+              setData(playerTab.sort(sortByOverallFifa))
+            }}>FIFA
+          </button>
+          </td>
+          <td>
+          <button onClick={() => {
+              setData(playerTab.sort(sortByOverallFm))
+            }}>FM
+          </button>
+          </td>
+          <td>
+          <button onClick={() => {
+              setData(playerTab.sort(sortByOverallDifference))
+            }}>Różnica
+          </button>
+          </td>
           <td>FIFA</td>
           <td>FM</td>
           <td>FIFA</td>
@@ -99,7 +112,7 @@ function sortFunction(a, b) {
           <td>FM</td>
         </tr>
         <tr>
-          <td colSpan={2}>Ocena ogólna</td>
+          <td colSpan={3}>Ocena ogólna</td>
           <td colSpan={2}>Szybkość</td>
           <td colSpan={2}>Fizyczność</td>
           <td colSpan={2}>Atak</td>
@@ -110,29 +123,53 @@ function sortFunction(a, b) {
           <td>Mentalność</td>
         </tr>
       </tbody>
-      {playerTab && playerTab.map(player =>(
-        <tr>
-          <td>{player[0]}</td>
-          <td>{player[1]}</td>
-          <td>{player[2]}</td>
-          <td>{player[3]}</td>
-          <td>{player[4]}</td>
-          <td>{player[5]}</td>
-          <td>{player[6]}</td>
-          <td>{player[7]}</td>
-          <td>{player[8]}</td>
-          <td>{player[9]}</td>
-          <td>{player[10]}</td>
-          <td>{player[11]}</td>
-          <td>{player[12]}</td>
-          <td>{player[13]}</td>
-          <td>{player[14]}</td>
-        </tr>
-    ))}</table>
-    <button onClick={() => {const xd = playerTab.sort(sortFunction)
-    setData(xd)
-    console.log(dataTest)
-      }}>aaa</button></>
+      {dataTest && 
+      dataTest.map((player, index) =>
+        {
+          if(player[1] === previousOverall){
+            amountSame += 1;
+            amount = index-amountSame
+          } 
+          else{
+            amount = index;
+            amountSame = 0;
+          }
+          previousOverall = player[1]
+
+          if(index < userPlayers) return(
+            <tr>
+              <td>{player[0]}</td>
+              <td>
+                {player[1]}
+                lepszy niż {(100-amount/436*100).toFixed(2)}
+              </td>
+              <td>{player[2]}</td>
+              <td>{Math.abs(parseInt(player[1]) - parseInt(player[2]))}</td>
+              <td>{player[3]}</td>
+              <td>{player[4]}</td>
+              <td>{player[5]}</td>
+              <td>{player[6]}</td>
+              <td>{player[7]}</td>
+              <td>{player[8]}</td>
+              <td>{player[9]}</td>
+              <td>{player[10]}</td>
+              <td>{player[11]}</td>
+              <td>{player[12]}</td>
+              <td>{player[13]}</td>
+              <td>{player[14]}</td>
+            </tr>
+          )
+        
+    })}</table>
+    <input
+      type="number"
+      min="5"
+      max="50"
+      value={userPlayers}
+      onChange={(e) => setUserPlayers(e.target.valueAsNumber)}
+    />
+    
+    </>
   );
 }
 
