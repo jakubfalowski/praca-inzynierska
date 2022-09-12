@@ -4,6 +4,11 @@ let ifFetch = true;
 export function App() {
   const [playersFifa, setPlayersFifa] = useState()
   const [playersFm, setPlayersFm] = useState()
+  const [sort, setSort] = useState()
+  const [order, setOrder] = useState("DSC")
+  const [listTab, setListTab] = useState()
+  const [dataTest, setData] = useState()
+
   async function fetchFifa() {
     try{
         const response = await fetch(`http://localhost:3000/api/fifa`);
@@ -60,12 +65,17 @@ if(playersFifa && playersFm){
     }
     if(test === false) noplayer.push(playersFifa[x].piłkarz)
   }
-  console.log(noplayer)
-  console.log(playerTab)
 }
 
 
-
+function sortFunction(a, b) {
+  if (a[1] === b[1]) {
+      return 0;
+  }
+  else {
+      return (a[1] < b[1]) ? -1 : 1;
+  }
+}
 
   return (
     <>
@@ -118,7 +128,11 @@ if(playersFifa && playersFm){
           <td>{player[13]}</td>
           <td>{player[14]}</td>
         </tr>
-    ))}</table></>
+    ))}</table>
+    <button onClick={() => {const xd = playerTab.sort(sortFunction)
+    setData(xd)
+    console.log(dataTest)
+      }}>aaa</button></>
   );
 }
 
