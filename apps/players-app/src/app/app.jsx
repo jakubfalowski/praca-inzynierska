@@ -126,22 +126,11 @@ let amount;
       {dataTest && 
       dataTest.map((player, index) =>
         {
-          if(player[1] === previousOverall){
-            amountSame += 1;
-            amount = index-amountSame
-          } 
-          else{
-            amount = index;
-            amountSame = 0;
-          }
-          previousOverall = player[1]
-
           if(index < userPlayers) return(
             <tr>
               <td>{player[0]}</td>
               <td>
                 {player[1]}
-                lepszy niż {(100-amount/436*100).toFixed(2)}
               </td>
               <td>{player[2]}</td>
               <td>{Math.abs(parseInt(player[1]) - parseInt(player[2]))}</td>
