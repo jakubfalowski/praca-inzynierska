@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import {sortByOverallDifference, sortByOverallFifa, sortByOverallFm} from "./sort";
+import {sortByOverallDifference, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPaceFm, sortByPaceDifference, sortByPhysicalityDifference, sortByPhysicalityFm, sortByPhysicalityFifa, sortByAttackFifa, sortByAttackFm, sortByAttackDifference, sortByDefensiveFifa, sortByDefensiveFm, sortByDefensiveDifference} from "./sort";
 
 let ifFetch = true;
 
@@ -67,13 +67,6 @@ if(playersFifa && playersFm){
   }
 }
 
-let previousOverall = 100;
-let amountBetter = 0;
-let amountSame = 0;
-let amountWorse = 0;
-
-let amount;
-
   return (
     <>
     <h1>Porównanie statystyk piłkarzy z Premier League w Fifie, Football Managerze i SofaScore (soon), z webscrappingu(cheerio) i własnych API(next.js)</h1>
@@ -82,38 +75,102 @@ let amount;
         <tr>
           <td rowSpan={2}>Imie i nazwisko</td>
           <td>
-          <button onClick={() => {
-              setData(playerTab.sort(sortByOverallFifa))
-            }}>FIFA
-          </button>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByOverallFifa))
+              }}>FIFA
+            </button>
           </td>
           <td>
-          <button onClick={() => {
-              setData(playerTab.sort(sortByOverallFm))
-            }}>FM
-          </button>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByOverallFm))
+              }}>FM
+            </button>
           </td>
           <td>
-          <button onClick={() => {
-              setData(playerTab.sort(sortByOverallDifference))
-            }}>Różnica
-          </button>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByOverallDifference))
+              }}>Różnica
+            </button>
           </td>
-          <td>FIFA</td>
-          <td>FM</td>
-          <td>FIFA</td>
-          <td>FM</td>
-          <td>FIFA</td>
-          <td>FM</td>
-          <td>FIFA</td>
-          <td>FM</td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByPaceFifa))
+              }}>FIFA
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByPaceFm))
+              }}>FM
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByPaceDifference))
+              }}>Różnica
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByPhysicalityFifa))
+              }}>FIFA
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByPhysicalityFm))
+              }}>FM
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByPhysicalityDifference))
+              }}>Różnica
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByAttackFifa))
+              }}>FIFA
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByAttackFm))
+              }}>FM
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByAttackDifference))
+              }}>Różnica
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByDefensiveFifa))
+              }}>FIFA
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByDefensiveFm))
+              }}>FM
+            </button>
+          </td>
+          <td>
+            <button onClick={() => {
+                setData(playerTab.sort(sortByDefensiveDifference))
+              }}>Różnica
+            </button>
+          </td>
         </tr>
         <tr>
           <td colSpan={3}>Ocena ogólna</td>
-          <td colSpan={2}>Szybkość</td>
-          <td colSpan={2}>Fizyczność</td>
-          <td colSpan={2}>Atak</td>
-          <td colSpan={2}>Obrona</td>
+          <td colSpan={3}>Szybkość</td>
+          <td colSpan={3}>Fizyczność</td>
+          <td colSpan={3}>Atak</td>
+          <td colSpan={3}>Obrona</td>
         </tr>
       </tbody>
       {dataTest && 
@@ -129,12 +186,16 @@ let amount;
               <td>{Math.abs(parseInt(player[1]) - parseInt(player[2]))}</td>
               <td>{player[3]}</td>
               <td>{player[4]}</td>
+              <td>{Math.abs(parseInt(player[3]) - parseInt(player[4]))}</td>
               <td>{player[5]}</td>
               <td>{player[6]}</td>
+              <td>{Math.abs(parseInt(player[5]) - parseInt(player[6]))}</td>
               <td>{player[7]}</td>
               <td>{player[8]}</td>
+              <td>{Math.abs(parseInt(player[7]) - parseInt(player[8]))}</td>
               <td>{player[9]}</td>
               <td>{player[10]}</td>
+              <td>{Math.abs(parseInt(player[9]) - parseInt(player[10]))}</td>
             </tr>
           )
         
