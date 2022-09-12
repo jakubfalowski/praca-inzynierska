@@ -107,9 +107,6 @@ let amount;
           <td>FM</td>
           <td>FIFA</td>
           <td>FM</td>
-          <td colSpan={2}>FIFA</td>
-          <td>FM</td>
-          <td>FM</td>
         </tr>
         <tr>
           <td colSpan={3}>Ocena ogólna</td>
@@ -117,10 +114,6 @@ let amount;
           <td colSpan={2}>Fizyczność</td>
           <td colSpan={2}>Atak</td>
           <td colSpan={2}>Obrona</td>
-          <td>Drybling</td>
-          <td>Podania</td>
-          <td>Technika</td>
-          <td>Mentalność</td>
         </tr>
       </tbody>
       {dataTest && 
@@ -142,10 +135,6 @@ let amount;
               <td>{player[8]}</td>
               <td>{player[9]}</td>
               <td>{player[10]}</td>
-              <td>{player[11]}</td>
-              <td>{player[12]}</td>
-              <td>{player[13]}</td>
-              <td>{player[14]}</td>
             </tr>
           )
         
