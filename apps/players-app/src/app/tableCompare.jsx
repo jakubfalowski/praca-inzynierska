@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import {sortByOverallDifference, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPaceFm, sortByPaceDifference, sortByPhysicalityDifference, sortByPhysicalityFm, sortByPhysicalityFifa, sortByAttackFifa, sortByAttackFm, sortByAttackDifference, sortByDefensiveFifa, sortByDefensiveFm, sortByDefensiveDifference} from "./sort";
 
 let ifFetch = true;
+let a = 0;
 
 export function TableCompare() {
   const [playersFifa, setPlayersFifa] = useState()
@@ -37,6 +38,7 @@ async function fetchFm() {
 useEffect(() => {
   fetchFifa();
   fetchFm();
+  console.log(playerTab[0][0])
 }, [ifFetch]);
 
 let playerTab = new Array(437);
@@ -70,6 +72,7 @@ if(playersFifa && playersFm){
       } 
     }
     if(test === false) noplayer.push(playersFifa[x].piłkarz)
+    if(playerTab[0][0] && !dataTest) setData(playerTab.sort(sortByOverallFifa))
   }
 }
 
