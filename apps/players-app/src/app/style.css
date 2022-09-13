@@ -1,0 +1,31 @@
+body{
+    background-color: #6926D6;
+}
+h1{
+    background-color:#8A4CE8;
+    color: white;
+}
+table{
+    background-color: #FFFFFF;
+    margin: 0 auto;
+}
+thead{
+    background-color: #A61D6F;
+    color: white;
+}
+td{
+    width: 100px;
+    text-align: center;
+}
+td:first-of-type{
+    width: 200px;
+}
+.active, tbody td:first-of-type{
+    background-color: #EEE3FF;
+}
+button{
+    width: 100px;
+    background-color: inherit;
+    color: inherit;
+    border: 0;
+}
