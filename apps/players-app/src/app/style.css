@@ -13,6 +13,9 @@ thead{
     background-color: #A61D6F;
     color: white;
 }
+thead tr:first-of-type td:not([rowspan="2"]):hover{
+    background-color: rgba(0,0,0,0.1)
+}
 td{
     width: 100px;
     text-align: center;
