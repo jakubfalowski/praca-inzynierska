@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import {sortByOverallDifference, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPaceFm, sortByPaceDifference, sortByPhysicalityDifference, sortByPhysicalityFm, sortByPhysicalityFifa, sortByAttackFifa, sortByAttackFm, sortByAttackDifference, sortByDefensiveFifa, sortByDefensiveFm, sortByDefensiveDifference} from "./sort";
 
-let ifFetch = true;
-let a = 0;
-
 export function TableCompare() {
   const [playersFifa, setPlayersFifa] = useState()
   const [playersFm, setPlayersFm] = useState()
@@ -15,6 +12,9 @@ export function TableCompare() {
   const [physicalityActive, setPhysicalityActive] = useState(false);
   const [attackActive, setAttackActive] = useState(false);
   const [defensiveActive, setDefensiveActive] = useState(false);
+
+  
+let ifFetch = true;
 
   async function fetchFifa() {
     try{
@@ -38,22 +38,23 @@ async function fetchFm() {
 useEffect(() => {
   fetchFifa();
   fetchFm();
-  console.log(playerTab[0][0])
 }, [ifFetch]);
 
-let playerTab = new Array(437);
-for(let i=0;i<=437;i++) playerTab[i]=new Array(0);
-let a = 0;
-let test = false;
-let noplayer = [];
-let xd = [];
+let playerTab; 
 
-function exists(arr, search) {
-  return arr.some(row => row.includes(search));
-}
+
 
 if(playersFifa && playersFm){
+
+  playerTab = new Array(437);
+  for(let i=0;i<=437;i++) playerTab[i]=new Array(0);
+
+  let a = 0;
+  let test = false;
+  let noplayer = [];
+  let xd = [];
   let fifaCopy = playersFifa;
+
   for(let x = 0; x < 645; x++){
     test = false;
     for(let z = 0; z < 645; z++){
@@ -84,10 +85,12 @@ if(playersFifa && playersFm){
       } 
     }
     if(test === false) noplayer.push(playersFifa[x].piłkarz)
-    if(playerTab[0][0] && !dataTest) setData(playerTab.sort(sortByOverallFifa))
+    if(playerTab[0][0] && !dataTest){
+      setData(playerTab.sort(sortByOverallFifa))
+    }
   }
 }
-console.log(xd)
+console.log(dataTest)
 
   return (
     <>
@@ -104,166 +107,197 @@ console.log(xd)
           <td rowSpan={2}>Imie i nazwisko</td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByOverallFifa))
-                setOverallActive(true)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByOverallFifa))
+                  setOverallActive(true)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
+                
               }}>FIFA
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByOverallFm))
-                setOverallActive(true)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByOverallFm))
+                  setOverallActive(true)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>FM
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByOverallDifference))
-                setOverallActive(true)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByOverallDifference))
+                  setOverallActive(true)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>Różnica
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByPaceFifa))
-                setOverallActive(false)
-                setPaceActive(true)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByPaceFifa))
+                  setOverallActive(false)
+                  setPaceActive(true)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>FIFA
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByPaceFm))
-                setOverallActive(false)
-                setPaceActive(true)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByPaceFm))
+                  setOverallActive(false)
+                  setPaceActive(true)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>FM
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByPaceDifference))
-                setOverallActive(false)
-                setPaceActive(true)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByPaceDifference))
+                  setOverallActive(false)
+                  setPaceActive(true)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>Różnica
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByPhysicalityFifa))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(true)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByPhysicalityFifa))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(true)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>FIFA
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByPhysicalityFm))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(true)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByPhysicalityFm))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(true)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>FM
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByPhysicalityDifference))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(true)
-                setAttackActive(false)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByPhysicalityDifference))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(true)
+                  setAttackActive(false)
+                  setDefensiveActive(false)
+                }
               }}>Różnica
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByAttackFifa))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(true)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByAttackFifa))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(true)
+                  setDefensiveActive(false)
+                }
               }}>FIFA
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByAttackFm))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(true)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByAttackFm))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(true)
+                  setDefensiveActive(false)
+                }
               }}>FM
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByAttackDifference))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(true)
-                setDefensiveActive(false)
+                if(playerTab){
+                  setData(playerTab.sort(sortByAttackDifference))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(true)
+                  setDefensiveActive(false)
+                }
               }}>Różnica
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByDefensiveFifa))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(true)
+                if(playerTab){
+                  setData(playerTab.sort(sortByDefensiveFifa))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(true)
+                }
               }}>FIFA
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByDefensiveFm))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(true)
+                if(playerTab){
+                  setData(playerTab.sort(sortByDefensiveFm))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(true)
+                }
               }}>FM
             </button>
           </td>
           <td>
             <button onClick={() => {
-                setData(playerTab.sort(sortByDefensiveDifference))
-                setOverallActive(false)
-                setPaceActive(false)
-                setPhysicalityActive(false)
-                setAttackActive(false)
-                setDefensiveActive(true)
+                if(playerTab){
+                  setData(playerTab.sort(sortByDefensiveDifference))
+                  setOverallActive(false)
+                  setPaceActive(false)
+                  setPhysicalityActive(false)
+                  setAttackActive(false)
+                  setDefensiveActive(true)
+                }
               }}>Różnica
             </button>
           </td>
@@ -277,7 +311,7 @@ console.log(xd)
         </tr>
       </thead>
       <tbody>
-      {dataTest && 
+      {dataTest ? 
       dataTest.map((player, index) =>
         {
           if(index < userPlayers) return(
@@ -301,7 +335,7 @@ console.log(xd)
             </tr>
           )
         
-    })}</tbody></table>
+    }): <tr><td colSpan="16">Brak wyników pobranych z API</td></tr>}</tbody></table>
     </>
   );
 }
