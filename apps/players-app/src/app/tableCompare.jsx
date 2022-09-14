@@ -46,12 +46,24 @@ for(let i=0;i<=437;i++) playerTab[i]=new Array(0);
 let a = 0;
 let test = false;
 let noplayer = [];
+let xd = [];
+
+function exists(arr, search) {
+  return arr.some(row => row.includes(search));
+}
 
 if(playersFifa && playersFm){
+  let fifaCopy = playersFifa;
   for(let x = 0; x < 645; x++){
     test = false;
+    for(let z = 0; z < 645; z++){
+      if(fifaCopy[z].piłkarz === playersFifa[x].piłkarz && fifaCopy[z].ocena === playersFifa[x].ocena && z !== x && !xd.includes(x) && !xd.includes(z)){
+          xd.push(z)
+         } 
+    }
+
     for(let y = 0; y < 1080; y++){
-      if(playersFifa[x].piłkarz === playersFm[y].piłkarz){
+      if(playersFifa[x].piłkarz === playersFm[y].piłkarz && !xd.includes(x)){
         test = true;
         playerTab[a].push(playersFifa[x].piłkarz)
         playerTab[a].push(playersFifa[x].ocena)
@@ -75,6 +87,7 @@ if(playersFifa && playersFm){
     if(playerTab[0][0] && !dataTest) setData(playerTab.sort(sortByOverallFifa))
   }
 }
+console.log(xd)
 
   return (
     <>

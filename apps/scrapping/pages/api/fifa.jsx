@@ -1,4 +1,3 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import Fifa from "../fifa";
 import dictPlayers from "../dictPlayers";
 
