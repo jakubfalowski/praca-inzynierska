@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import {sortByOverallDifference, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPaceFm, sortByPaceDifference, sortByPhysicalityDifference, sortByPhysicalityFm, sortByPhysicalityFifa, sortByAttackFifa, sortByAttackFm, sortByAttackDifference, sortByDefensiveFifa, sortByDefensiveFm, sortByDefensiveDifference} from "./sort";
+import { sortByOverallDifference, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPaceFm, sortByPaceDifference, sortByPhysicalityDifference, sortByPhysicalityFm, sortByPhysicalityFifa, sortByAttackFifa, sortByAttackFm, sortByAttackDifference, sortByDefensiveFifa, sortByDefensiveFm, sortByDefensiveDifference } from "./sort";
 
 export function TableCompare() {
   const [playersFifa, setPlayersFifa] = useState()
   const [playersFm, setPlayersFm] = useState()
-  const [dataTest, setData] = useState()
+  const [playersData, setData] = useState()
   const [userPlayers, setUserPlayers] = useState(10)
 
   const [overallActive, setOverallActive] = useState(false);
@@ -13,8 +13,7 @@ export function TableCompare() {
   const [attackActive, setAttackActive] = useState(false);
   const [defensiveActive, setDefensiveActive] = useState(false);
 
-  
-let ifFetch = true;
+  let ifFetch = true;
 
   async function fetchFifa() {
     try{
@@ -42,55 +41,53 @@ useEffect(() => {
 
 let playerTab; 
 
-
-
 if(playersFifa && playersFm){
 
   playerTab = new Array(437);
   for(let i=0;i<=437;i++) playerTab[i]=new Array(0);
 
-  let a = 0;
-  let test = false;
-  let noplayer = [];
-  let xd = [];
+  let doubleSource = false;
+  let doubleNameTab = [];
   let fifaCopy = playersFifa;
 
-  for(let x = 0; x < 645; x++){
-    test = false;
-    for(let z = 0; z < 645; z++){
-      if(fifaCopy[z].piłkarz === playersFifa[x].piłkarz && fifaCopy[z].ocena === playersFifa[x].ocena && z !== x && !xd.includes(x) && !xd.includes(z)){
-          xd.push(z)
+  for(let indexFifa = 0; indexFifa < 645; indexFifa++){
+    for(let indexCopyFifa = 0; indexCopyFifa < 645; indexCopyFifa++){
+      if(fifaCopy[indexCopyFifa].name === playersFifa[indexFifa].name && fifaCopy[indexCopyFifa].rating === playersFifa[indexFifa].rating && indexCopyFifa !== indexFifa && !doubleNameTab.includes(indexFifa) && !doubleNameTab.includes(indexCopyFifa)){
+          doubleNameTab.push(indexCopyFifa)
          } 
     }
+    
+    doubleSource = false;
+    let indexPlayerTab = 0;
 
-    for(let y = 0; y < 1080; y++){
-      if(playersFifa[x].piłkarz === playersFm[y].piłkarz && !xd.includes(x)){
-        test = true;
-        playerTab[a].push(playersFifa[x].piłkarz)
-        playerTab[a].push(playersFifa[x].ocena)
-        playerTab[a].push(playersFm[y].ocena*5)
-        playerTab[a].push(playersFifa[x].szybkość)
-        playerTab[a].push(playersFm[y].szybkość*5)
-        playerTab[a].push(playersFifa[x].fizyczność)
-        playerTab[a].push(playersFm[y].fizyczność*5)
-        playerTab[a].push(playersFifa[x].strzały)
-        playerTab[a].push(playersFm[y].atak*5)
-        playerTab[a].push(playersFifa[x].defensywa)
-        playerTab[a].push(playersFm[y].obrona*5)
-        playerTab[a].push(playersFifa[x].drybling)
-        playerTab[a].push(playersFifa[x].podania)
-        playerTab[a].push(playersFm[y].technika*5)
-        playerTab[a].push(playersFm[y].mentalność*5)
-        a++;
+    for(let indexFm = 0; indexFm < 1080; indexFm++){
+      if(playersFifa[indexFifa].name === playersFm[indexFm].name && !doubleNameTab.includes(indexFifa)){
+        doubleSource = true;
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].name)
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].rating)
+        playerTab[indexPlayerTab].push(playersFm[indexFm].rating*5)
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].pace)
+        playerTab[indexPlayerTab].push(playersFm[indexFm].pace*5)
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].physicality)
+        playerTab[indexPlayerTab].push(playersFm[indexFm].physicality*5)
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].shots)
+        playerTab[indexPlayerTab].push(playersFm[indexFm].attack*5)
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].defensive)
+        playerTab[indexPlayerTab].push(playersFm[indexFm].defensive*5)
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].dribble)
+        playerTab[indexPlayerTab].push(playersFifa[indexFifa].pass)
+        playerTab[indexPlayerTab].push(playersFm[indexFm].technique*5)
+        playerTab[indexPlayerTab].push(playersFm[indexFm].mentality*5)
+        indexPlayerTab++;
       } 
     }
-    if(test === false) noplayer.push(playersFifa[x].piłkarz)
-    if(playerTab[0][0] && !dataTest){
-      setData(playerTab.sort(sortByOverallFifa))
-    }
+    
+    let playerOneSourceTab = [];
+
+    if(doubleSource === false) playerOneSourceTab.push(playersFifa[indexFifa].name)
+    if(playerTab[0][0] && !playersData) setData(playerTab.sort(sortByOverallFifa))
   }
 }
-console.log(dataTest)
 
   return (
     <>
@@ -311,8 +308,8 @@ console.log(dataTest)
         </tr>
       </thead>
       <tbody>
-      {dataTest ? 
-      dataTest.map((player, index) =>
+      {playersData ? 
+      playersData.map((player, index) =>
         {
           if(index < userPlayers) return(
             <tr>

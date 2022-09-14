@@ -15,7 +15,7 @@ export default async function FmAPI(req,res) {
               });
 
               const jsonStats = playerStats.map((typeStat =>{
-                 return {"piłkarz": typeStat[0], "ocena": typeStat[1], "atak": typeStat[2], "obrona":typeStat[3], "technika": typeStat[4], "mentalność": typeStat[5], "fizyczność": typeStat[6], "szybkość":typeStat[7]}
+                 return {"name": typeStat[0], "rating": typeStat[1], "attack": typeStat[2], "defensive":typeStat[3], "technique": typeStat[4], "mentality": typeStat[5], "physicality": typeStat[6], "pace":typeStat[7]}
               }));
 
             res.json(jsonStats);

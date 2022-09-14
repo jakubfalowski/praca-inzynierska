@@ -14,7 +14,7 @@ export default async function FifaAPI(req,res) {
                 })
               });
               const jsonStats = playerStats.map((typeStat =>{
-                return {"piłkarz": dictPlayers(typeStat[0]), "ocena": typeStat[1], "szybkość": typeStat[2], "strzały":typeStat[3], "podania": typeStat[4], "drybling": typeStat[5], "defensywa": typeStat[6], "fizyczność":typeStat[7]}
+                return {"name": dictPlayers(typeStat[0]), "rating": typeStat[1], "pace": typeStat[2], "shots":typeStat[3], "pass": typeStat[4], "dribble": typeStat[5], "defensive": typeStat[6], "physicality":typeStat[7]}
               }));
             res.json(jsonStats);
         }
