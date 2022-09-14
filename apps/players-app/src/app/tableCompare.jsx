@@ -46,6 +46,8 @@ if(playersFifa && playersFm){
   playerTab = new Array(437);
   for(let i=0;i<=437;i++) playerTab[i]=new Array(0);
 
+  let indexPlayerTab = 0;
+
   let doubleSource = false;
   let doubleNameTab = [];
   let fifaCopy = playersFifa;
@@ -58,8 +60,7 @@ if(playersFifa && playersFm){
     }
     
     doubleSource = false;
-    let indexPlayerTab = 0;
-
+  
     for(let indexFm = 0; indexFm < 1080; indexFm++){
       if(playersFifa[indexFifa].name === playersFm[indexFm].name && !doubleNameTab.includes(indexFifa)){
         doubleSource = true;
