@@ -10,9 +10,8 @@ export function SearchPlayers(){
         playerTab.push(value)
       }).then(addNamesTab)
 
-
       function addNamesTab(){
-        for(let i = 0; i<438; i++){
+        for(let i = 0; i<426; i++){
             names.push(playerTab[0][i][0])
         }
         console.log(names)
