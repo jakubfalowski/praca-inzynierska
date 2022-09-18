@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { playersFifaFunction, playersFmFunction, playerTabFunction } from "./fetchData";
+import { playerTabFunction } from "./fetchData";
 import { sortByOverallDifference, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPaceFm, sortByPaceDifference, sortByPhysicalityDifference, sortByPhysicalityFm, sortByPhysicalityFifa, sortByAttackFifa, sortByAttackFm, sortByAttackDifference, sortByDefensiveFifa, sortByDefensiveFm, sortByDefensiveDifference } from "./sort";
 
 export function TableCompare() {
