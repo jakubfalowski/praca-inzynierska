@@ -247,7 +247,7 @@ export function TableCompare() {
         {
           if(index < userPlayers) return(
             <tr key={index}>
-              <td>{player[0]}</td>
+              <td><a href={`/players/${player[0]}`}>{player[0]}</a></td>
               <td className={overallActive ? 'active' : ''}>{player[1]}</td>
               <td className={overallActive ? 'active' : ''}>{player[2]}</td>
               <td className={overallActive ? 'active' : ''}>{Math.abs(parseInt(player[1]) - parseInt(player[2]))}</td>

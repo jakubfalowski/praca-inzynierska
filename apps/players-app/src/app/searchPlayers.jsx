@@ -1,10 +1,14 @@
-import { Autocomplete } from '@mantine/core';
+import { useRef } from 'react';
+import { useNavigate } from "react-router-dom";
+import { Autocomplete, Button, Group } from '@mantine/core';
 import { playerTabFunction } from "./fetchData";
 
 export function SearchPlayers(){
 
     const playerTab = new Array(0);
     const names = new Array(0);
+    const ref = useRef(null);
+    const navigate = useNavigate();
 
     playerTabFunction().then((value) => {
         playerTab.push(value)
@@ -18,11 +22,17 @@ export function SearchPlayers(){
       }
 
     return (
-        <Autocomplete
-          label="Your favorite framework/library"
-          placeholder="Pick one"
-          data={names}
-        />
+        <Group>
+            <Autocomplete
+            label="Wyszukiwanie szczegółowe piłkarzy"
+            placeholder="Wpisz nazwę zawodnika"
+            data={names}
+            ref={ref}
+            />
+            <Button variant="gradient" gradient={{ from: 'teal', to: 'violet', deg: 60 }} onClick={()=>{
+                navigate(ref.current.value !== '' && ref.current.value);
+            }}>Przekieruj</Button>
+        </Group>
       );
 }
 export default SearchPlayers;
