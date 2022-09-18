@@ -84,6 +84,7 @@
     "react-dom": "18.2.0",
     "react-router": "^6.4.0",
     "react-router-dom": "^6.3.0",
+    "recharts": "^2.1.14",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "0.13.7",
     "rxjs": "^7.0.0",

@@ -18,7 +18,6 @@ export function SearchPlayers(){
         for(let i = 0; i<426; i++){
             names.push(playerTab[0][i][0])
         }
-        console.log(names)
       }
 
     return (
