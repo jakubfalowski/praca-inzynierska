@@ -21,34 +21,30 @@ const data02 = [
 ];
 
 let playerTab = [];
-let jb = 0;
 
 export default function ChartStats(){
 
   const [on, setOn] = useState(false)
 
   let test = 0;
+  const name = ['Ocena ogólna','Ocena ogólna','Szybkość','Szybkość','Fizyczność','Fizyczność','Strzały','Atak','Defensywa','Defensywa','Drybling','Podania','Technika','Mentalność',];
 
-  
     playerTabFunction().then((stat) => {
-      for(let a = 0; a < 14; a++){
-        test = 0;
-        for(let i = 0; i < 426; i++){
-          test += parseInt(stat[i][a+1])
-        }
-        test = test/425;
-        console.log(a);
-        console.log(test)
-        if(jb < 14){
-          playerTab.push({name:"name", value: test})
-          jb++;
+      if(on === false && playerTab.length < 1){
+        for(let a = 0; a < 14; a++){
+          test = 0;
+          for(let i = 0; i < 426; i++){
+            test += parseInt(stat[i][a+1])
+          }
+          test = test/425;
+            if([0,2,4,6,8,10,11].includes(a)) playerTab.push({name:name[a], fifa: test})
+            else playerTab.push({name:name[a], fm: test})
         }
       }
     }).then(()=>{
       setOn(true)
     })
     
-    console.log(jb+"JB")
 
   console.log(playerTab)
   
@@ -71,8 +67,8 @@ export default function ChartStats(){
       <YAxis />
       <Tooltip />
       <Legend />
-      <Bar dataKey="value" fill="#8884d8" />
-      {/* <Bar dataKey="uv" fill="#82ca9d" /> */}
+      <Bar dataKey="fifa" fill="#8884d8" />
+      <Bar dataKey="fm" fill="#82ca9d" />
     </BarChart>
     }
     </div>
