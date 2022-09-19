@@ -1,5 +1,6 @@
 import Fifa from "../fifa";
 import dictPlayers from "../dictPlayers";
+import { Fifa21 } from "../fifa21";
 
 export default async function FifaAPI(req,res) {
     const results = await Fifa();
@@ -18,7 +19,7 @@ export default async function FifaAPI(req,res) {
               }));
             res.json(jsonStats);
         }
-        else res.json("Błąd zaczytania danych w API")
+        else res.json(Fifa21)
     }
 }
 

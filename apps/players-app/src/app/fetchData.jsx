@@ -81,6 +81,8 @@ export const playerTabFunction = async () => {
               playerTab[indexPlayerTab].push(playersFifa[indexFifa].pass)
               playerTab[indexPlayerTab].push(playersFm[indexFm].technique*5)
               playerTab[indexPlayerTab].push(playersFm[indexFm].mentality*5)
+              playerTab[indexPlayerTab].push(playersFm[indexFm].club)
+              playerTab[indexPlayerTab].push(playersFm[indexFm].nation)
               indexPlayerTab++;
             } 
           }

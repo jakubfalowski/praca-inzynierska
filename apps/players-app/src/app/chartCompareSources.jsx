@@ -1,11 +1,11 @@
-import React, { PureComponent, useState } from 'react';
+import { useState } from 'react';
 import { playerTabFunction } from './fetchData';
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis,Tooltip, Legend } from "recharts";
 import './style.css';
 
 let playerTab = [];
 
-export default function ChartStats(){
+export default function ChartCompareSources(){
 
   const [on, setOn] = useState(false)
 
