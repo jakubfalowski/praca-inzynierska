@@ -1,24 +1,7 @@
 import React, { PureComponent, useState } from 'react';
 import { playerTabFunction } from './fetchData';
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis,Tooltip, Legend } from "recharts";
-
-const data01 = [
-  { name: "Group A", value: 400 },
-  { name: "Group B", value: 300 },
-  { name: "Group C", value: 300 },
-  { name: "Group D", value: 200 },
-  { name: "Group E", value: 278 },
-  { name: "Group F", value: 189 }
-];
-
-const data02 = [
-  { name: "Group A", value: 2400 },
-  { name: "Group B", value: 4567 },
-  { name: "Group C", value: 1398 },
-  { name: "Group D", value: 9800 },
-  { name: "Group E", value: 3908 },
-  { name: "Group F", value: 4800 }
-];
+import './style.css';
 
 let playerTab = [];
 
@@ -26,19 +9,19 @@ export default function ChartStats(){
 
   const [on, setOn] = useState(false)
 
-  let test = 0;
-  const name = ['Ocena ogólna','Ocena ogólna','Szybkość','Szybkość','Fizyczność','Fizyczność','Strzały','Atak','Defensywa','Defensywa','Drybling','Podania','Technika','Mentalność',];
+  let average;
+  const nameOfStat = ['Ocena ogólna','Ocena ogólna','Szybkość','Szybkość','Fizyczność','Fizyczność','Strzały','Atak','Defensywa','Defensywa','Drybling','Podania','Technika','Mentalność',];
 
     playerTabFunction().then((stat) => {
       if(on === false && playerTab.length < 1){
         for(let a = 0; a < 14; a++){
-          test = 0;
+          average = 0;
           for(let i = 0; i < 426; i++){
-            test += parseInt(stat[i][a+1])
+            average += parseInt(stat[i][a+1])
           }
-          test = test/425;
-            if([0,2,4,6,8,10,11].includes(a)) playerTab.push({name:name[a], fifa: test})
-            else playerTab.push({name:name[a], fm: test})
+          average = average/425;
+            if([0,2,4,6,8,10,11].includes(a)) playerTab.push({name: nameOfStat[a], fifa: average.toFixed(2)})
+            else playerTab.push({name: nameOfStat[a], fm: average.toFixed(2)})
         }
       }
     }).then(()=>{
@@ -49,11 +32,15 @@ export default function ChartStats(){
   console.log(playerTab)
   
   return (
-    <div>
+    <div style={{
+      backgroundColor: "#ffffff",
+      width: "1600px"
+    }}>
+      <h2 className='center'>Średnia ocena danej statystyki</h2>
     { on === true &&
       <BarChart
-      width={500}
-      height={300}
+      width={1500}
+      height={400}
       data={playerTab}
       margin={{
         top: 5,
@@ -64,11 +51,11 @@ export default function ChartStats(){
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
-      <YAxis />
-      <Tooltip />
+      <YAxis  />
+      <Tooltip  />
       <Legend />
-      <Bar dataKey="fifa" fill="#8884d8" />
-      <Bar dataKey="fm" fill="#82ca9d" />
+      <Bar dataKey="fifa" stackId="a" fill="#8A4CE8" />
+      <Bar dataKey="fm" stackId="a" fill="#A61D6F" />
     </BarChart>
     }
     </div>
