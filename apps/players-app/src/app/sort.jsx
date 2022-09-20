@@ -142,3 +142,12 @@ export function sortByDefensiveDifference(a, b) {
         return (a[24] > b[24]) ? -1 : 1;
     }
 }
+
+export function sortChartByOverall(a, b) {
+    if (a.ratingFifa + a.ratingFm === b.ratingFifa + b.ratingFm) {
+        return null
+    }
+    else {
+        return ((a.ratingFifa + a.ratingFm) > (b.ratingFifa + b.ratingFm)) ? -1 : 1;
+    }
+}

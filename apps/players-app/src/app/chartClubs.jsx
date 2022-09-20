@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { BarChart, Bar, CartesianGrid, XAxis, YAxis,Tooltip, Legend } from "recharts";
+import Charts from './charts';
 import { playerTabFunction } from "./fetchData";
-import { sortByOverallFifa } from "./sort";
+import { sortByOverallFifa, sortChartByOverall } from "./sort";
 
 const clubsName = ["Liverpool","Tottenham", "West Ham", "Wolves", "Brighton", "Crystal Palac", "West Brom", "Sheffield Uni", "Burnley", "Arsenal", "Fulham", "Leeds Utd", "Newcastle"
 , "Leicester", "Southampton", "Manchester Un", "Manchester Ci", "Aston Villa", "Everton", "Chelsea"];
@@ -46,38 +46,15 @@ export function ChartClubs(){
             }
 
         })
-        console.log(clubsTab)
       }).then(()=>{
         setOn(true)
       })
 
       return (
-        <div style={{
-          backgroundColor: "#ffffff",
-          width: "1600px"
-        }}>
-          <h2 className='center'>Średnia ocena danej statystyki</h2>
-        { on === true &&
-          <BarChart
-          width={1500}
-          height={400}
-          data={clubsTab}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis  />
-          <Tooltip  />
-          <Legend />
-          <Bar dataKey="ratingFifa" stackId="a" fill="#8A4CE8" />
-          <Bar dataKey="ratingFm" stackId="a" fill="#A61D6F" />
-        </BarChart>
-        }
+        <div>
+        { on === true ?
+          <Charts data={clubsTab.sort(sortChartByOverall)} dataKey1="ratingFifa" dataKey2="ratingFm" description="Siła zespołów"/>
+        : <p>Czekaj</p>}
         </div>
       );
 
