@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Charts from './charts';
 import { playerTabFunction } from "./fetchData";
+import { LoadingOverlay} from '@mantine/core';
+
 import { sortByOverallFifa, sortChartByAttack, sortChartByDefensive, sortChartByOverall, sortChartByPace, sortChartByPhysicality, sortChartByTechnique } from "./sort";
 
 const clubsName = ["Liverpool","Tottenham", "West Ham", "Wolves", "Brighton", "Crystal Palac", "West Brom", "Sheffield Uni", "Burnley", "Arsenal", "Fulham", "Leeds Utd", "Newcastle"
@@ -90,7 +92,8 @@ export function ChartClubs(){
           <Charts data={paceTab} dataKey1="paceFifa" dataKey2="paceFm" description="Najszybsze zespoły"/>
           <Charts data={physicalityTab} dataKey1="physicalityFifa" dataKey2="physicalityFm" description="Zespoły najlepsze fizycznie"/>
         </>
-        : <p>Czekaj</p>}
+        : <LoadingOverlay visible={true} overlayBlur={2} />}
+        
         </div>
       );
 

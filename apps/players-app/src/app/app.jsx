@@ -11,10 +11,12 @@ export function App() {
   return (
     <Router>
         <Routes>
-          <Route path={'/players'} element={<><SearchPlayers /><br/><TableCompare /></>} />
+          <Route path={'/'} element={<a href='/players'>Pokaż apke z piłkarzami</a>} />
+          <Route path={'/players'} element={<><SearchPlayers /><br/><TableCompare /><a href='/players/charts'>Pokaż wykresy</a></>} />
           <Route path={'/players/:name'} element={<AdvancedPlayer />} />
           <Route path={'/players/charts'} element={<ChartStats />} />
-          <Route path={'/'} element={<ChartClubs />} />
+          <Route path={'/players/charts/club'} element={<ChartClubs />} />
+
         </Routes>
       </Router>
 

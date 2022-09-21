@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { playerTabFunction } from './fetchData';
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis,Tooltip, Legend } from "recharts";
+import { LoadingOverlay} from '@mantine/core';
 import './style.css';
 
 let playerTab = [];
@@ -32,12 +33,13 @@ export default function ChartCompareSources(){
   console.log(playerTab)
   
   return (
-    <div style={{
-      backgroundColor: "#ffffff",
-      width: "1600px"
-    }}>
-      <h2 className='center'>Średnia ocena danej statystyki</h2>
-    { on === true &&
+    <div>
+    { on === true ?
+      <div style={{
+        backgroundColor: "#ffffff",
+        width: "1600px"
+      }}>
+        <h2 className='center'>Średnia ocena danej statystyki</h2>
       <BarChart
       width={1500}
       height={400}
@@ -57,7 +59,10 @@ export default function ChartCompareSources(){
       <Bar dataKey="fifa" stackId="a" fill="#8A4CE8" />
       <Bar dataKey="fm" stackId="a" fill="#A61D6F" />
     </BarChart>
-    }
     </div>
+    : <LoadingOverlay visible={true} overlayBlur={2} />}
+    <a href="/players/charts/club">Pokaż kluby</a>
+    </div>
+    
   );
 }
