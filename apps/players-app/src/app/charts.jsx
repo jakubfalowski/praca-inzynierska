@@ -1,6 +1,7 @@
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis,Tooltip, Legend } from "recharts";
+import { sortByOverallFifa, sortChartByAttack, sortChartByDefensive, sortChartByOverall, sortChartByPace } from "./sort";
 
-export function Charts(data, dataKey1, dataKey2, description){
+export function Charts(data, type, dataKey1, dataKey2, description){
     return(
         <div style={{
           backgroundColor: "#ffffff",

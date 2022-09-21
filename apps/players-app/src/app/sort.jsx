@@ -144,10 +144,55 @@ export function sortByDefensiveDifference(a, b) {
 }
 
 export function sortChartByOverall(a, b) {
-    if (a.ratingFifa + a.ratingFm === b.ratingFifa + b.ratingFm) {
+    if (parseInt(a.ratingFifa) + parseInt(a.ratingFm) === parseInt(b.ratingFifa) + parseInt(b.ratingFm)) {
         return null
     }
     else {
-        return ((a.ratingFifa + a.ratingFm) > (b.ratingFifa + b.ratingFm)) ? -1 : 1;
+        return ((parseInt(a.ratingFifa) + parseInt(a.ratingFm)) > (parseInt(b.ratingFifa) + parseInt(b.ratingFm))) ? -1 : 1;
+    }
+}
+
+export function sortChartByPace(a, b) {
+    if (parseInt(a.paceFifa) + parseInt(a.paceFm) === parseInt(b.paceFifa) + parseInt(b.paceFm)) {
+        return null
+    }
+    else {
+        return ((parseInt(a.paceFifa) + parseInt(a.paceFm)) > (parseInt(b.paceFifa) + parseInt(b.paceFm))) ? -1 : 1;
+    }
+}
+
+export function sortChartByAttack(a, b) {
+    if (parseInt(a.shotsFifa) + parseInt(a.attackFm) === parseInt(b.shotsFifa) + parseInt(b.attackFm)) {
+        return null
+    }
+    else {
+        return ((parseInt(a.shotsFifa) + parseInt(a.attackFm)) > (parseInt(b.shotsFifa) + parseInt(b.attackFm))) ? -1 : 1;
+    }
+}
+
+export function sortChartByDefensive(a, b) {
+    if (parseInt(a.defensiveFifa) + parseInt(a.defensiveFm) === parseInt(b.defensiveFifa) + parseInt(b.defensiveFm)) {
+        return null
+    }
+    else {
+        return ((parseInt(a.defensiveFifa) + parseInt(a.defensiveFm)) > (parseInt(b.defensiveFifa) + parseInt(b.defensiveFm))) ? -1 : 1;
+    }
+}
+
+export function sortChartByPhysicality(a, b) {
+    if (parseInt(a.physicalityFifa) + parseInt(a.physicalityFm) === parseInt(b.physicalityFifa) + parseInt(b.physicalityFm)) {
+        return null
+    }
+    else {
+        return ((parseInt(a.physicalityFifa) + parseInt(a.physicalityFm)) > (parseInt(b.physicalityFifa) + parseInt(b.physicalityFm))) ? -1 : 1;
+    }
+}
+
+export function sortChartByTechnique(a, b) {
+    if (parseInt(a.techniqueFifa) + parseInt(a.techniqueFm) === parseInt(b.techniqueFifa) + parseInt(b.techniqueFm)) {
+        return null
+    }
+    else {
+        return ((parseInt(a.techniqueFifa) + parseInt(a.techniqueFm)) > (parseInt(b.techniqueFifa) + parseInt(b.techniqueFm))) ? -1 : 1;
     }
 }

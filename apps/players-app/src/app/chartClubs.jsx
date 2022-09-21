@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Charts from './charts';
 import { playerTabFunction } from "./fetchData";
-import { sortByOverallFifa, sortChartByOverall } from "./sort";
+import { sortByOverallFifa, sortChartByAttack, sortChartByDefensive, sortChartByOverall, sortChartByPace, sortChartByPhysicality, sortChartByTechnique } from "./sort";
 
 const clubsName = ["Liverpool","Tottenham", "West Ham", "Wolves", "Brighton", "Crystal Palac", "West Brom", "Sheffield Uni", "Burnley", "Arsenal", "Fulham", "Leeds Utd", "Newcastle"
 , "Leicester", "Southampton", "Manchester Un", "Manchester Ci", "Aston Villa", "Everton", "Chelsea"];
@@ -12,13 +12,24 @@ for(let a = 0; a < 20; a++){
         {name: clubsName[a], playersFifa: 0, ratingFifa: 0, paceFifa: 0, shotsFifa: 0, passFifa: 0,dribbleFifa: 0, defensiveFifa: 0,physicalityFifa: 0, 
             playersFm: 0, ratingFm: 0, attackFm: 0, defensiveFm: 0, techniqueFm: 0, mentalityFm: 0, physicalityFm: 0, paceFm: 0})
 }
-
+let render = 0;
+let overallTab = [];
+let paceTab = [];
+let attackTab = [];
+let defensiveTab = [];
+let physicalityTab = [];
+let techniqueTab = [];
 
 export function ChartClubs(){
 
     const [on, setOn] = useState(false)
+    
 
-    playerTabFunction().then((stat) => {
+    // const [techniqueTab, setTechniqueTab] = useState();
+    // const [physicalityTab, setPhysicalityTab] = useState();
+
+    
+      playerTabFunction().then((stat) => {
         const bestSquad = stat.sort(sortByOverallFifa);
         // console.log(stat)
         bestSquad.map(player =>{
@@ -44,16 +55,41 @@ export function ChartClubs(){
                     clubsTab[clubIndex].playersFm++;
                 } 
             }
-
         })
-      }).then(()=>{
-        setOn(true)
+
+        if(render === 0){
+          for(let x = 0; x <= clubsTab.length-1; x++){
+            overallTab.push(clubsTab[x])
+            paceTab.push(clubsTab[x])
+            attackTab.push(clubsTab[x])
+            defensiveTab.push(clubsTab[x])
+            physicalityTab.push(clubsTab[x])
+            techniqueTab.push({name: clubsTab[x].name ,techniqueFifa: ((parseInt(clubsTab[x].dribbleFifa)+parseInt(clubsTab[x].passFifa))/2).toFixed(0), techniqueFm: clubsTab[x].techniqueFm})
+          }
+          render++;
+        }
+
+        overallTab.sort(sortChartByOverall);
+        paceTab.sort(sortChartByPace);
+        attackTab.sort(sortChartByAttack);
+        defensiveTab.sort(sortChartByDefensive);
+        physicalityTab.sort(sortChartByPhysicality)
+        techniqueTab.sort(sortChartByTechnique)
+
+        setOn(true);
       })
 
       return (
         <div>
         { on === true ?
-          <Charts data={clubsTab.sort(sortChartByOverall)} dataKey1="ratingFifa" dataKey2="ratingFm" description="Siła zespołów"/>
+        <>
+          <Charts data={overallTab} dataKey1="ratingFifa" dataKey2="ratingFm" description="Siła zespołów"/>
+          <Charts data={techniqueTab} dataKey1="techniqueFifa" dataKey2="techniqueFm" description="Zespoły najlepsze technicznie"/>
+          <Charts data={attackTab} dataKey1="shotsFifa" dataKey2="attackFm" description="Zespoły najlepsze w ofensywie"/>
+          <Charts data={defensiveTab} dataKey1="defensiveFifa" dataKey2="defensiveFm" description="Zespoły najlepsze w defensywie"/>
+          <Charts data={paceTab} dataKey1="paceFifa" dataKey2="paceFm" description="Najszybsze zespoły"/>
+          <Charts data={physicalityTab} dataKey1="physicalityFifa" dataKey2="physicalityFm" description="Zespoły najlepsze fizycznie"/>
+        </>
         : <p>Czekaj</p>}
         </div>
       );
