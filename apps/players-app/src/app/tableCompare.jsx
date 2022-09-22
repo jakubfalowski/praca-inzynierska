@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { playerTabFunction } from "./fetchData";
 import { sortByOverallDifference, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPaceFm, sortByPaceDifference, sortByPhysicalityDifference, sortByPhysicalityFm, sortByPhysicalityFifa, sortByAttackFifa, sortByAttackFm, sortByAttackDifference, sortByDefensiveFifa, sortByDefensiveFm, sortByDefensiveDifference } from "./sort";
+import { LoadingOverlay} from '@mantine/core';
 
 export function TableCompare() {
 
@@ -266,7 +267,7 @@ export function TableCompare() {
             </tr>
           )
         
-    }): <tr><td colSpan="16">Brak wyników pobranych z API</td></tr>}</tbody></table>
+    }): <tr><td colSpan="16"><LoadingOverlay visible={true} overlayBlur={2} /></td></tr>}</tbody></table>
     </>
   );
 }

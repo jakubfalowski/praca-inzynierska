@@ -42,3 +42,17 @@ a:hover{
 .center{
     text-align: center;
 }
+.ratingBox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    height: 50px;
+    width: 50px;
+}
+.better{
+    background-color: green;
+}
+.worse{
+    background-color: red;
+}
