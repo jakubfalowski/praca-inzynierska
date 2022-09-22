@@ -25,7 +25,7 @@ export function TableCompare() {
   }).then(initalizeData)
 
   return (
-    <>
+    <div className="tableCompare">
     <input
       type="number"
       min="5"
@@ -268,7 +268,7 @@ export function TableCompare() {
           )
         
     }): <tr><td colSpan="16"><LoadingOverlay visible={true} overlayBlur={2} /></td></tr>}</tbody></table>
-    </>
+    </div>
   );
 }
 

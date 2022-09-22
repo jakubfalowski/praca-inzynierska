@@ -1,5 +1,5 @@
 import {TableCompare} from './tableCompare'
-import './style.css'
+import './style.scss'
 import SearchPlayers from './searchPlayers';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AdvancedPlayer from './advancedPlayer';
