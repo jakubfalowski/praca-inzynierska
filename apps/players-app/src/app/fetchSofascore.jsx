@@ -1,27 +1,36 @@
 import { useEffect } from "react";
 
-let ifFetch = true;
-export function FetchSofaScore(){
+let ifFetch = 0;
 
-    async function fetchData(query) {
-        try{
-            const options = {
-                method: 'GET',
-                headers: {
-                  'X-RapidAPI-Key': '35ffe6e4c5mshe6f63287717ea95p1950a0jsna16c5a14a971',
-                  'X-RapidAPI-Host': 'sofascore.p.rapidapi.com'
-                }
-              };
-              const response = await fetch('https://sofascore.p.rapidapi.com/players/get-statistics?playerId=108579&tournamentId=17&seasonId=37036&typ=overall',options);
-              const data = await response.json();
-              console.log(data)
-        } catch(error){
-          console.log(error)
-        }
+export async function FetchSofaScore(nameOfPlayer){
+
+  const options = {
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '35ffe6e4c5mshe6f63287717ea95p1950a0jsna16c5a14a971',
+      'X-RapidAPI-Host': 'sofascore.p.rapidapi.com'
     }
-    
-    useEffect(() => {
-        fetchData();
-      }, [ifFetch]);
+  };
+
+  async function jeden(){ 
+    const response1 = await fetch(`https://sofascore.p.rapidapi.com/players/search?name=${nameOfPlayer}`,options);
+    const data1 = await response1.json();
+    return data1.players[0].id;
+  }
+
+  
+    const returnData = () => {
+      if(ifFetch === 0){
+        const getData = jeden().then(async (playerId) => {
+          const response2 = await fetch(`https://sofascore.p.rapidapi.com/players/get-statistics?playerId=${playerId}&tournamentId=17&seasonId=37036&typ=overall`,options);
+          const data2 = await response2.json();
+          return data2;
+        })
+        ifFetch++;
+        return getData;
+    }
+  }
+      
+  return returnData()
 }
 export default FetchSofaScore;
