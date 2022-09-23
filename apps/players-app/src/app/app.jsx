@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AdvancedPlayer from './advancedPlayer';
 import ChartStats from './chartCompareSources';
 import ChartClubs from './chartClubs';
+import FetchSofaScore from './fetchSofascore';
 
 export function App() {
 
@@ -16,6 +17,7 @@ export function App() {
           <Route path={'/players/:name'} element={<AdvancedPlayer />} />
           <Route path={'/players/charts'} element={<ChartStats />} />
           <Route path={'/players/charts/club'} element={<ChartClubs />} />
+          <Route path={'/test'} element={<FetchSofaScore />} />
 
         </Routes>
       </Router>

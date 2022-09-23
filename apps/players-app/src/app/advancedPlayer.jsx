@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { playerTabFunction } from './fetchData';
 import { Table } from '@mantine/core';
 import './style.scss'
+import { LoadingOverlay} from '@mantine/core';
 
 export function AdvancedPlayer(){
 
@@ -32,7 +33,7 @@ export function AdvancedPlayer(){
             backgroundColor: "#ffffff",
             width: "1600px"
           }}>
-            { data &&
+            { data ?
     
                 <Table className="tbl" horizontalSpacing="xl" verticalSpacing="xs">
                     <caption>
@@ -79,11 +80,11 @@ export function AdvancedPlayer(){
                         <tr className='statBox'>
                             <td>Mentalność</td>
                             <td className='ratingBox same'> - </td>
-                            <td className='ratingBox same' colSpan={2}>{data[14]}</td>
+                            <td className='ratingBox same'>{data[14]}</td>
                         </tr>      
                         {/*  */}
                     </tbody>
-                </Table>
+                </Table> : <LoadingOverlay visible={true} overlayBlur={2} />
             }
         </div>
     )
