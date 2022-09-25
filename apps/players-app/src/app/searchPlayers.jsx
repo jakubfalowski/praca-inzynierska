@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Autocomplete, Button, Group } from '@mantine/core';
 import { playerTabFunction } from "./fetchData";
+import { sortByOverallFifa } from './sort';
 
 export function SearchPlayers(){
 
@@ -12,14 +13,15 @@ export function SearchPlayers(){
 
     playerTabFunction().then((value) => {
         playerTab.push(value)
-      }).then(addNamesTab)
+      }).then(addNamesTab).then(names.sort(sortByOverallFifa))
 
       function addNamesTab(){
+        playerTab[0].sort(sortByOverallFifa);
         for(let i = 0; i<426; i++){
             names.push(playerTab[0][i][0])
         }
       }
-
+      
     return (
         <Group>
             <Autocomplete

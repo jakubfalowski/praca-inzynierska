@@ -6,6 +6,7 @@ import './style.scss'
 import { LoadingOverlay} from '@mantine/core';
 import FetchSofaScore from './fetchSofascore';
 import { sortByAttackFifa, sortByDefensiveFifa, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPhysicalityFifa, sortByPaceFm, sortByPhysicalityFm, sortByAttackFm, sortByDefensiveFm, sortByDribblingFifa, sortByPassFifa, sortByTechniqueFm, sortByMentalityFm } from './sort';
+import { DictClubs } from './dictClubs';
 
 let apiData = new Array(0);
 let indexInQueue = new Array(0);
@@ -108,7 +109,7 @@ export function AdvancedPlayer(){
                 <Table className="tbl" horizontalSpacing="xl" verticalSpacing="xs">
                     <caption>
                         <h2> Nazwa zawodnika: {data[0]}</h2>
-                        <h2> Klub: {data[15]}</h2>
+                        <h2> Klub: {DictClubs(data[15])}</h2>
                         <h2> Narodowość: {data[16]}</h2>
                     </caption>
                     <thead>
