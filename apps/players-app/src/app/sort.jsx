@@ -124,7 +124,7 @@ export function sortByDefensiveFifa(a, b) {
 }
 
 export function sortByDefensiveFm(a, b) {
-    if (a[8] === b[8]) {
+    if (a[10] === b[10]) {
         return (a[9] > b[9]) ? -1 : 1;
     }
     else {
@@ -140,6 +140,42 @@ export function sortByDefensiveDifference(a, b) {
     }
     else {
         return (a[24] > b[24]) ? -1 : 1;
+    }
+}
+
+export function sortByDribblingFifa(a, b) {
+    if (a[11] === b[11]) {
+        return (a[12] > b[12]) ? -1 : 1;
+    }
+    else {
+        return (a[11] > b[11]) ? -1 : 1;
+    }
+}
+
+export function sortByPassFifa(a, b) {
+    if (a[12] === b[12]) {
+        return (a[11] > b[11]) ? -1 : 1;
+    }
+    else {
+        return (a[12] > b[12]) ? -1 : 1;
+    }
+}
+
+export function sortByTechniqueFm(a, b) {
+    if (a[13] === b[13]) {
+        return (a[11] > b[11]) ? -1 : 1;
+    }
+    else {
+        return (a[13] > b[13]) ? -1 : 1;
+    }
+}
+
+export function sortByMentalityFm(a, b) {
+    if (a[14] === b[14]) {
+        return (a[2] > b[2]) ? -1 : 1;
+    }
+    else {
+        return (a[14] > b[14]) ? -1 : 1;
     }
 }
 
