@@ -46,13 +46,11 @@ body{
     }
 }
 .ap{
-    .ratingBox{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    td, table{
+        border: white 2px solid;
         color: white;
-        height: 100px;
-        width: 45%;
+        font-size: 16px;
+        text-align: center;
     }
     .better{
         background-color: green;
@@ -63,19 +61,7 @@ body{
     .same{
         background-color: grey;
     }
-    .statBox{
-        display: flex;
-        justify-content: space-around;
-    }
-    .head{
-        background-color: black;
-    }
-    thead td{
-        background-color: black;
-        color: white;
-    }
-    .statBox td:first-of-type{
-        background-color: white;
-        width: 10%;
+    .statBox td:first-of-type, thead{
+        background-color: black
     }
 }
