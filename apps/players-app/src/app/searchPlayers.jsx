@@ -16,10 +16,12 @@ export function SearchPlayers(){
       }).then(addNamesTab).then(names.sort(sortByOverallFifa))
 
       function addNamesTab(){
-        playerTab[0].sort(sortByOverallFifa);
-        for(let i = 0; i<426; i++){
-            names.push(playerTab[0][i][0])
-        }
+        if(playerTab.length > 0){
+          playerTab[0].sort(sortByOverallFifa);
+          for(let i = 0; i<426; i++){
+              names.push(playerTab[0][i][0])
+          }
+        } 
       }
       
     return (

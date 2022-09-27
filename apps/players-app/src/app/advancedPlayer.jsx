@@ -7,6 +7,7 @@ import { LoadingOverlay} from '@mantine/core';
 import FetchSofaScore from './fetchSofascore';
 import { sortByAttackFifa, sortByDefensiveFifa, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPhysicalityFifa, sortByPaceFm, sortByPhysicalityFm, sortByAttackFm, sortByDefensiveFm, sortByDribblingFifa, sortByPassFifa, sortByTechniqueFm, sortByMentalityFm } from './sort';
 import { DictClubs } from './dictClubs';
+import { bestAssistsPerMatch, bestBigChancesPerMatch, bestClearancesPerMatch, bestDribblingPerMatch, bestGoalsPerMatch, bestInterceptionsPerMatch, bestKeyPassesPerMatch, bestRating, bestShotsPerMatch, bestTacklesPerMatch } from './bestRating';
 
 let apiData = new Array(0);
 let indexInQueue = new Array(0);
@@ -80,20 +81,20 @@ export function AdvancedPlayer(){
         }
         else console.log("error")
     }
-    console.log(sortTab)
-    // FetchSofaScore(name).then(async (value)=>{
-    //     if(value && value.error.message !== "Not Found") {
-    //         apiData.push(
-    //             {"percentDribbles": value.statistics.successfulDribblesPercentage, "wasFouled": value.statistics.wasFouled,
-    //                 "percentAerialDuels" : value.statistics.aerialDuelsWonPercentage, "percentGroundDuels": value.statistics.groundDuelsWonPercentage,
-    //                 "goals" : value.statistics.goals, "shots": value.statistics.totalShots,
-    //                 "tackles": value.statistics.tackles, "interceptions": value.statistics.interceptions, "clearances": value.statistics.clearances,
-    //                 "percentPasses": value.statistics.accuratePassesPercentage, "keyPasses": value.statistics.keyPasses, "bigChancesCreated": value.statistics.bigChancesCreated, "assists": value.statistics.assists,
-    //                 "rating": value.statistics.rating, "minutes": value.statistics.minutesPlayed
-    //             })
-    //     }
+
+    FetchSofaScore(name).then(async (value)=>{
+        if(value && value.error === undefined) {
+            apiData.push(
+                {"dribblesPerMatch": value.statistics.minutesPlayed > 89 ? value.statistics.successfulDribbles/(value.statistics.minutesPlayed/90): value.statistics.successfulDribbles , "wasFouled": value.statistics.wasFouled,
+                    "percentAerialDuels" : value.statistics.aerialDuelsWonPercentage, "percentGroundDuels": value.statistics.groundDuelsWonPercentage,
+                    "goals" : value.statistics.goals, "shots": value.statistics.totalShots,
+                    "tackles": value.statistics.tackles, "interceptions": value.statistics.interceptions, "clearances": value.statistics.clearances,
+                    "percentPasses": value.statistics.accuratePassesPercentage, "keyPasses": value.statistics.keyPasses, "bigChancesCreated": value.statistics.bigChancesCreated, "assists": value.statistics.assists,
+                    "rating": value.statistics.rating, "minutes": value.statistics.minutesPlayed
+                })
+        }
         
-    // })
+    })
 
     playerTabFunction().then((value) => {
         playerTab.push(value)
@@ -104,7 +105,7 @@ export function AdvancedPlayer(){
             width: "1600px",
             margin: "0 auto"
           }}>
-            { (data && indexInQueue) ?
+            { (data && indexInQueue && sortTab[0][0] !== undefined) ?
     
                 <Table className="tbl" horizontalSpacing="xl" verticalSpacing="xs">
                     <caption>
@@ -141,7 +142,7 @@ export function AdvancedPlayer(){
                             <td className={indexInQueue[1] < indexInQueue[0] ? 'ratingBox better': indexInQueue[0] === indexInQueue[1] ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && (100-(indexInQueue[1]/438)*100).toFixed(2)}%</td>
                             <td className={indexInQueue[1] < indexInQueue[0] ? 'ratingBox better': indexInQueue[0] === indexInQueue[1] ? 'ratingBox same' : 'ratingBox worse'}>{((data[2]/parseInt(sortTab[1][0][2]))*100).toFixed(2)}%</td>
                             <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Średnia ocena: {(apiData[0].rating).toFixed(2)}</li></ul> : "-"}</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul></ul> : "-"}</td>
+                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Średnia ocena: {((apiData[0].rating/bestRating)*100).toFixed(2)}%</li></ul> : "-"}</td>
                         </tr>
                         <tr className='statBox'>
                             <td>Szybkość</td>
@@ -151,8 +152,8 @@ export function AdvancedPlayer(){
                             <td className={indexInQueue[3] < indexInQueue[2] ? 'ratingBox better': indexInQueue[2] === indexInQueue[3] ? 'ratingBox same' : 'ratingBox worse'}>{data[4]}</td>
                             <td className={indexInQueue[3] < indexInQueue[2] ? 'ratingBox better': indexInQueue[2] === indexInQueue[3] ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && (100-(indexInQueue[3]/438)*100).toFixed(2)}%</td>
                             <td className={indexInQueue[3] < indexInQueue[2] ? 'ratingBox better': indexInQueue[2] === indexInQueue[3] ? 'ratingBox same' : 'ratingBox worse'}>{((data[4]/parseInt(sortTab[3][0][4]))*100).toFixed(2)}%</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Procent wygranych pojedynków biegowych: {(apiData[0].percentDribbles).toFixed(2)}</li><li>Ilość faulów na danym zawodniku: {apiData[0].wasFouled}</li></ul> : "-"}</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul></ul> : "-"}</td>
+                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Minięcia przeciwników na mecz: {(apiData[0].dribblesPerMatch).toFixed(2)}</li><li>Ilość faulów na danym zawodniku: {apiData[0].wasFouled}</li></ul> : "-"}</td>
+                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Minięcia przeciwników na mecz: {((apiData[0].dribblesPerMatch/bestDribblingPerMatch)*100).toFixed(2)}%</li></ul> : "-"}</td>
 
                         </tr>
                         <tr className='statBox'>
@@ -163,8 +164,8 @@ export function AdvancedPlayer(){
                             <td className={indexInQueue[5] < indexInQueue[4] ? 'ratingBox better': indexInQueue[4] === indexInQueue[5] ? 'ratingBox same' : 'ratingBox worse'}>{data[6]}</td>
                             <td className={indexInQueue[5] < indexInQueue[4] ? 'ratingBox better': indexInQueue[4] === indexInQueue[5] ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && (100-(indexInQueue[5]/438)*100).toFixed(2)}%</td>
                             <td className={indexInQueue[5] < indexInQueue[4] ? 'ratingBox better': indexInQueue[4] === indexInQueue[5] ? 'ratingBox same' : 'ratingBox worse'}>{((data[6]/parseInt(sortTab[5][0][6]))*100).toFixed(2)}%</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Procent wygranych pojedynków powietrznych: {(apiData[0].percentAerialDuels).toFixed(2)}</li><li>Procent wygranych pojedynków z piłką na trawie: {(apiData[0].percentGroundDuels).toFixed(2)}</li></ul> : "-"}</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul></ul> : "-"}</td>
+                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Wygrane pojedynki powietrzne: {(apiData[0].percentAerialDuels).toFixed(2)}%</li><li>Wygrane pojedynki z piłką na trawie: {(apiData[0].percentGroundDuels).toFixed(2)}%</li></ul> : "-"}</td>
+                            <td className='ratingBox same'>-</td>
                         </tr>
                         <tr className='statBox'> 
                             <td>Atak</td>
@@ -175,7 +176,7 @@ export function AdvancedPlayer(){
                             <td className={indexInQueue[7] < indexInQueue[6] ? 'ratingBox better': indexInQueue[6] === indexInQueue[7] ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && (100-(indexInQueue[7]/438)*100).toFixed(2)}%</td>
                             <td className={indexInQueue[7] < indexInQueue[6] ? 'ratingBox better': indexInQueue[6] === indexInQueue[7] ? 'ratingBox same' : 'ratingBox worse'}>{((data[8]/parseInt(sortTab[7][0][8]))*100).toFixed(2)}%</td>
                             <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Liczba bramek: {apiData[0].goals}</li><li>Liczba strzałów: {apiData[0].shots}</li></ul> : "-"}</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul></ul> : "-"}</td>
+                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Liczba bramek: {((apiData[0].goals/(apiData[0].minutes/90)/bestGoalsPerMatch)*100).toFixed(2)}%</li><li>Liczba strzałów: {((apiData[0].shots/(apiData[0].minutes/90)/bestShotsPerMatch)*100).toFixed(2)}%</li></ul> : "-"}</td>
                         </tr>
                         <tr className='statBox'> 
                             <td>Defensywa</td>
@@ -186,18 +187,18 @@ export function AdvancedPlayer(){
                             <td className={indexInQueue[9] < indexInQueue[8] ? 'ratingBox better': indexInQueue[8] === indexInQueue[9] ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && (100-(indexInQueue[9]/438)*100).toFixed(2)}%</td>
                             <td className={indexInQueue[9] < indexInQueue[8] ? 'ratingBox better': indexInQueue[8] === indexInQueue[9] ? 'ratingBox same' : 'ratingBox worse'}>{((data[10]/parseInt(sortTab[9][0][10]))*100).toFixed(2)}%</td>
                             <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Odbiory: {apiData[0].interceptions}</li><li>Wślizgi: {apiData[0].tackles}</li><li>Wybicia: {apiData[0].clearances}</li></ul> : "-"}</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul></ul> : "-"}</td>
+                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Odbiory: {(((apiData[0].interceptions/(apiData[0].minutes/90))/bestInterceptionsPerMatch)*100).toFixed(2)}%</li><li>Wślizgi: {((apiData[0].tackles/(apiData[0].minutes/90)/bestTacklesPerMatch)*100).toFixed(2)}%</li><li>Wybicia: {((apiData[0].clearances/(apiData[0].minutes/90)/bestClearancesPerMatch)*100).toFixed(2)}%</li></ul> : "-"}</td>
                         </tr>
                         <tr className='statBox'>
-                            <td>Drybling / Podania</td>
-                            <td className={indexInQueue[10]+indexInQueue[11] < indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{data[11]+" / "+data[12]}</td>
-                            <td className={indexInQueue[10]+indexInQueue[11] < indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && (100-(indexInQueue[10]/438)*100).toFixed(2)+"% / "+(100-(indexInQueue[11]/438)*100).toFixed(2) }%</td>
-                            <td className={indexInQueue[10]+indexInQueue[11] < indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{((data[11]/parseInt(sortTab[10][0][11]))*100).toFixed(2)}% / {((data[12]/parseInt(sortTab[11][0][12]))*100).toFixed(2)}%</td>
+                            <td>Technika</td>
+                            <td className={indexInQueue[10]+indexInQueue[11] < indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{`Drybling: ${data[11]}, Podania: ${data[12]}`}</td>
+                            <td className={indexInQueue[10]+indexInQueue[11] < indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && `Drybling: ${(100-(indexInQueue[10]/438)*100).toFixed(2)}%, Podania: ${(100-(indexInQueue[11]/438)*100).toFixed(2)}%`}</td>
+                            <td className={indexInQueue[10]+indexInQueue[11] < indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{`Drybling: ${((data[11]/parseInt(sortTab[10][0][11]))*100).toFixed(2)}%, Podania: ${((data[12]/parseInt(sortTab[11][0][12]))*100).toFixed(2)}%`}</td>
                             <td className={indexInQueue[10]+indexInQueue[11] > indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{data[13]}</td>
                             <td className={indexInQueue[10]+indexInQueue[11] > indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{indexInQueue.length > 0 && (100-(indexInQueue[12]/438)*100).toFixed(2) }%</td>
                             <td className={indexInQueue[10]+indexInQueue[11] > indexInQueue[12]*2 ? 'ratingBox better': indexInQueue[10]+indexInQueue[11] === indexInQueue[12]*2 ? 'ratingBox same' : 'ratingBox worse'}>{((data[13]/parseInt(sortTab[12][0][13]))*100).toFixed(2)}%</td>
                             <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Asysty: {apiData[0].assists}</li><li>Kluczowe podania: {apiData[0].keyPasses}</li><li>Stworzone niebezpieczne sytuacje: {apiData[0].bigChancesCreated}</li><li>Procent celnych podań: {(apiData[0].percentPasses).toFixed(2)}</li></ul> : "-"}</td>
-                            <td className='ratingBox same'>{apiData.length > 0 ? <ul></ul> : "-"}</td>
+                            <td className='ratingBox same'>{apiData.length > 0 ? <ul><li>Asysty: {((apiData[0].assists/(apiData[0].minutes/90)/bestAssistsPerMatch)*100).toFixed(2)}%</li><li>Kluczowe podania: {((apiData[0].keyPasses/(apiData[0].minutes/90)/bestKeyPassesPerMatch)*100).toFixed(2)}%</li><li>Stworzone niebezpieczne sytuacje: {((apiData[0].bigChancesCreated/(apiData[0].minutes/90)/bestBigChancesPerMatch)*100).toFixed(2)}%</li></ul> : "-"}</td>
                         </tr>             
                     </tbody>
                 </Table> : <LoadingOverlay visible={true} overlayBlur={2} />
