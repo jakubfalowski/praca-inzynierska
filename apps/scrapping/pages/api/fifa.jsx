@@ -2,7 +2,15 @@ import Fifa from "../fifa";
 import dictPlayers from "../dictPlayers";
 import { Fifa21 } from "../fifa21";
 
+import NextCors from 'nextjs-cors';
+
 export default async function FifaAPI(req,res) {
+  await NextCors(req, res, {
+    // Options
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    origin: '*',
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+ });
     const results = await Fifa();
 
     const interval = setInterval(timeToFetch, 1);
