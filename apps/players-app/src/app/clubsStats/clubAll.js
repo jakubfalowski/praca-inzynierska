@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import ClubResults, {team1Matches, team2Matches} from "./clubResults"
 import allMatchesPush, {team1Value, team2Value, goals,homeMatches, awayMatches} from "./allMatchesPush";
-import './style.css'
+import './style.scss'
 import { Table, Button, Collapse, Grid } from '@mantine/core';
 import MatchPrediction from "./matchPrediction";
 import TableApp from "./tableApp";

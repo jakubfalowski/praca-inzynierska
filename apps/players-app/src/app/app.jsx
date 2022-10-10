@@ -1,5 +1,5 @@
 import {TableCompare} from './playersStats/tableCompare'
-import './style.scss'
+import '../styles.scss'
 import SearchPlayers from './playersStats/searchPlayers';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import AdvancedPlayer from './playersStats/advancedPlayer';
@@ -22,8 +22,8 @@ export function App() {
           <Route path={'/players/charts/club'} element={<ChartClubs />} />
           <Route path={'/test'} element={<FetchSofaScore />} />
 
-          <Route path={"/main"} element ={<PageIndex />} />
-        <Route path={"/results/:match/:home/:away"} element ={<ClubAll/>} />
+          <Route path={"/clubs"} element ={<PageIndex />} />
+          <Route path={"/results/:match/:home/:away"} element ={<ClubAll/>} />
 
         </Routes>
       </Router>
