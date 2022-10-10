@@ -1,11 +1,14 @@
-import {TableCompare} from './tableCompare'
+import {TableCompare} from './playersStats/tableCompare'
 import './style.scss'
-import SearchPlayers from './searchPlayers';
+import SearchPlayers from './playersStats/searchPlayers';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import AdvancedPlayer from './advancedPlayer';
-import ChartStats from './chartCompareSources';
-import ChartClubs from './chartClubs';
-import FetchSofaScore from './fetchSofascore';
+import AdvancedPlayer from './playersStats/advancedPlayer';
+import ChartStats from './playersStats/chartCompareSources';
+import ChartClubs from './playersStats/chartClubs';
+import FetchSofaScore from './playersStats/fetchSofascore';
+
+import PageIndex from './clubsStats/pageIndex';
+import ClubAll from './clubsStats/clubAll';
 
 export function App() {
 
@@ -18,6 +21,9 @@ export function App() {
           <Route path={'/players/charts'} element={<ChartStats />} />
           <Route path={'/players/charts/club'} element={<ChartClubs />} />
           <Route path={'/test'} element={<FetchSofaScore />} />
+
+          <Route path={"/main"} element ={<PageIndex />} />
+        <Route path={"/results/:match/:home/:away"} element ={<ClubAll/>} />
 
         </Routes>
       </Router>
