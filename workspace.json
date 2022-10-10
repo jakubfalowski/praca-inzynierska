@@ -5,8 +5,6 @@
     "players-app": "apps/players-app",
     "players-app-e2e": "apps/players-app-e2e",
     "scrapping": "apps/scrapping",
-    "scrapping-e2e": "apps/scrapping-e2e",
-    "teams-app": "apps/teams-app",
-    "teams-app-e2e": "apps/teams-app-e2e"
+    "scrapping-e2e": "apps/scrapping-e2e"
   }
 }
