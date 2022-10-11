@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { playerTabFunction } from './fetchData';
 import { BarChart, Bar, CartesianGrid, XAxis, YAxis,Tooltip, Legend } from "recharts";
 import { LoadingOverlay} from '@mantine/core';
-import '../style.scss';
+import '../../styles.scss';
 
 let playerTab = [];
 

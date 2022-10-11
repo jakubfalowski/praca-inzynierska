@@ -1,0 +1,28 @@
+.mantine-Carousel-slide{
+    background-size: cover;
+    z-index: -1;
+    font-size: 40px;
+    text-shadow: 1px 1px 100px white;
+    transition: 20s;
+    &:hover{
+        transition: 5s;
+        font-size: 100px;
+        filter: brightness(40%);
+        color: white;
+        text-shadow: 5px 5px black;
+    }
+    
+    &:first-of-type{
+        background-image: url("../../../images/playerBg.jpg");
+    }
+    &:last-of-type{
+        background-image: url("../../../images/teamBg.jpg");
+    }
+
+    & .sliderText{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;     
+    }
+}

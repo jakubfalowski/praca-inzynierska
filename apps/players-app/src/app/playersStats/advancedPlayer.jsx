@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import { playerTabFunction } from './fetchData';
 import { Table } from '@mantine/core';
-import '../style.scss'
+import '../../styles.scss';
 import { LoadingOverlay} from '@mantine/core';
 import FetchSofaScore from './fetchSofascore';
 import { sortByAttackFifa, sortByDefensiveFifa, sortByOverallFifa, sortByOverallFm, sortByPaceFifa, sortByPhysicalityFifa, sortByPaceFm, sortByPhysicalityFm, sortByAttackFm, sortByDefensiveFm, sortByDribblingFifa, sortByPassFifa, sortByTechniqueFm, sortByMentalityFm } from './sort';

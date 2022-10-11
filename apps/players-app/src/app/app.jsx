@@ -9,13 +9,14 @@ import FetchSofaScore from './playersStats/fetchSofascore';
 
 import PageIndex from './clubsStats/pageIndex';
 import ClubAll from './clubsStats/clubAll';
+import MainPage from './mainPage';
 
 export function App() {
 
   return (
     <Router>
         <Routes>
-          <Route path={'/'} element={<a href='/players'>Pokaż apke z piłkarzami</a>} />
+          <Route path={'/'} element={<MainPage />} />
           <Route path={'/players'} element={<><SearchPlayers /><br/><TableCompare /><a href='/players/charts'>Pokaż wykresy</a></>} />
           <Route path={'/players/:name'} element={<AdvancedPlayer />} />
           <Route path={'/players/charts'} element={<ChartStats />} />
