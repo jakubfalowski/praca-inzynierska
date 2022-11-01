@@ -9,6 +9,6 @@ export const options = {
   method: 'GET',
   headers: {
     'X-RapidAPI-Host': 'flashscore.p.rapidapi.com',
-    'X-RapidAPI-Key': key1
+    'X-RapidAPI-Key': key5
   }
 };

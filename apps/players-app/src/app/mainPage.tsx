@@ -1,12 +1,14 @@
 import { Carousel } from '@mantine/carousel';
 import {useNavigate} from "react-router-dom";
 import "../slider.scss";
+import AuthorQuote from './authorQuote';
+import Modules from './modules';
 
 export function MainPage() {
     const navigate = useNavigate();
-  return (
+    return (
     <div className='mainPage'>
-        <Carousel sx={{ width: 1920 }} mx="auto" withIndicators height={500}  styles={{
+        <Carousel sx={{ width: "100%" }} mx="auto" withIndicators height={500}  styles={{
             control: {
             '&[data-inactive]': {
                 opacity: 0,
@@ -14,13 +16,15 @@ export function MainPage() {
             },
             },
         }}>
-        <Carousel.Slide  onClick={() => navigate('/players')}>
+        <Carousel.Slide onClick={() => navigate('/players')}>
             <div className='sliderText'><h1>Piłkarze</h1></div>
         </Carousel.Slide>
-        <Carousel.Slide>
+        <Carousel.Slide onClick={() => navigate('/clubs')}>
             <div className='sliderText'><h1>Drużyny</h1></div>
         </Carousel.Slide>
         </Carousel>
+        <Modules />
+        <AuthorQuote />
     </div>
   );
 }

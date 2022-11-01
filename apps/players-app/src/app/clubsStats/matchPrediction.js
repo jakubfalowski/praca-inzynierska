@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { options } from "./fetchOption";
+import { options } from "../matchStats/fetchOption";
 
 
 export function MatchPrediction(props){

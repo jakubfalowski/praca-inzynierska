@@ -1,10 +1,7 @@
 import React, {useState, useEffect} from "react";
 import { allMatchesPush, team1Value, team2Value} from "./allMatchesPush";
 
-// import { homeMatchesPush, homeValue } from "./homeMatchesPush";
-// import { awayMatchesPush, awayValue } from "./awayMatchesPush";
-import { homeValue, awayValue } from "./clubAll";
-import {options} from './fetchOption'
+import {options} from '../matchStats/fetchOption'
 
 export let Home;
 export let Away;
@@ -20,6 +17,8 @@ let renderA = 0;
     
       const [clubs, setClubs] = useState([]);
       const [clubs2, setClubs2] = useState([]);
+      const [teamHome, setTeamHome] = useState([]);
+      const [teamAway, setTeamAway] = useState([]);
       const ifFetch = true;
 
       useEffect(() => {
@@ -39,13 +38,13 @@ let renderA = 0;
         const results = data.DATA[0].EVENTS;
         if(query === props.home){
           setClubs(results);
-          if(results[0].HOME_PARTICIPANT_IDS[0] === props.home) teamHome = results[0].HOME_NAME;
-          else teamHome = results[0].AWAY_NAME;
+          if(results[0].HOME_PARTICIPANT_IDS[0] === props.home) setTeamHome(results[0].HOME_NAME);
+          else setTeamHome(results[0].AWAY_NAME)
         } 
         if(query === props.away) {
           setClubs2(results);
-          if(results[0].HOME_PARTICIPANT_IDS[0] === props.away) teamAway = results[0].HOME_NAME;
-          else teamAway = results[0].AWAY_NAME;
+          if(results[0].HOME_PARTICIPANT_IDS[0] === props.away) setTeamAway(results[0].HOME_NAME)
+          else setTeamAway(results[0].AWAY_NAME);
         }
         
       } catch(error){
@@ -61,8 +60,8 @@ let renderA = 0;
             renderH += 1;
             if(renderH <= 15) team1Matches.push(item);
           })
-          Home = team1Value+homeValue // home
-          console.log(Home, team1Value, homeValue);
+          Home = team1Value/*+ homeValue */ // home
+          // console.log(Home, team1Value, homeValue);
         }
 
         if(team === 'away'){
@@ -71,13 +70,10 @@ let renderA = 0;
             renderA += 1;
             if(renderA <= 15) team2Matches.push(item);
           })
-          Away = team2Value+awayValue;
-          console.log(Away,team2Value, awayValue);
+          Away = team2Value/*+awayValue; */
+          // console.log(Away,team2Value, awayValue);
         } 
       }
-    return(
-      <h2>{teamHome} - {teamAway}</h2>
-    )
   }
 
 export default ClubResults;

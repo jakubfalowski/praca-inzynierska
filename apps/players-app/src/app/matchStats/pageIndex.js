@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import ClubAll from "./clubAll";
-import { convertToDate } from "./convertToDate";
+import ClubAll from "../clubsStats/clubAll";
+import { convertToDate } from "../clubsStats/convertToDate";
 import {options} from './fetchOption';
 import { Grid } from '@mantine/core';
 
@@ -12,9 +12,7 @@ export function PageIndex(){
     const [leagueName, setLeagueName] = useState();
     const date = new Date();
     let today = [];
-    // for(let i = 0; i < 20; i++){
-    //     today[i] = date.getFullYear()+'-'+(date.getMonth()+2)+'-'+(date.getDate()-i);
-    // } 
+
     for(let i = 0; i < 7; i++){
         today[i] = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate()+i);
     } 
@@ -43,7 +41,6 @@ export function PageIndex(){
             { dataset !== undefined && dataset.map((data, i) => {
                 for(let daysMatch=7; daysMatch>0; daysMatch--){
                     if(convertToDate(data.START_TIME).endsWith(today[daysMatch])){
-                        // https://mantine.dev/dates/date-picker/#min-and-max-dates przerobic na to
                         return(
                             <Grid.Col md={4} sm={6} xs={12}>
                                 <img className="clubLogo" src={`${data.HOME_IMAGES[0]}`} alt={data.HOME_NAME} /><img src={`${data.AWAY_IMAGES[0]}`} alt={data.AWAY_NAME} /><a href={`/results/${data.EVENT_ID}/${data.HOME_PARTICIPANT_IDS[0]}/${data.AWAY_PARTICIPANT_IDS[0]}`}>{data.HOME_NAME} - {data.AWAY_NAME} <br /></a><p>{convertToDate(data.START_TIME)}</p>

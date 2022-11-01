@@ -7,9 +7,11 @@ import ChartStats from './playersStats/chartCompareSources';
 import ChartClubs from './playersStats/chartClubs';
 import FetchSofaScore from './playersStats/fetchSofascore';
 
-import PageIndex from './clubsStats/pageIndex';
+import PageIndex from './matchStats/pageIndex';
 import ClubAll from './clubsStats/clubAll';
 import MainPage from './mainPage';
+import FetchResults from './matchStats/fetchResults';
+import { Test } from './matchStats/test';
 
 export function App() {
 
@@ -21,7 +23,7 @@ export function App() {
           <Route path={'/players/:name'} element={<AdvancedPlayer />} />
           <Route path={'/players/charts'} element={<ChartStats />} />
           <Route path={'/players/charts/club'} element={<ChartClubs />} />
-          <Route path={'/test'} element={<FetchSofaScore />} />
+          <Route path={'/test/:match/:home/:away'} element={<Test />} />
 
           <Route path={"/clubs"} element ={<PageIndex />} />
           <Route path={"/results/:match/:home/:away"} element ={<ClubAll/>} />
