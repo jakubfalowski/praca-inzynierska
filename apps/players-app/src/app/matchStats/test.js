@@ -13,10 +13,14 @@ export function Test(){
 
     const getMatches = () => {
         return new Promise ((resolve, reject) => { 
-          FetchResults(home, away).then((value) => {
-            if(value && matchesCopy.length < 1) matchesCopy = value;
-            resolve()
-          })
+        if(matchesCopy.length < 1){
+            FetchResults(home, away).then((value) => {
+                console.log(value)
+                matchesCopy = value;
+                resolve()
+              })
+        }
+          
         })
       }
 
@@ -36,8 +40,14 @@ export function Test(){
     return(
         <div>
             {
-                homeTeamMatches && homeTeamMatches.map(e => (
-                    <p>{e.EVENT_ID} eeeeee</p>
+                homeTeamMatches && homeTeamMatches.map(match => (
+                    <p>{match.HOME_PARTICIPANT_NAME_ONE} - {match.AWAY_PARTICIPANT_NAME_ONE}</p>
+                ))
+            }
+        <hr />
+            {
+                awayTeamMatches && awayTeamMatches.map(match => (
+                    <p>{match.HOME_PARTICIPANT_NAME_ONE} - {match.AWAY_PARTICIPANT_NAME_ONE}</p>
                 ))
             }
         </div>
