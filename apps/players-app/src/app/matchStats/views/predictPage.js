@@ -1,16 +1,20 @@
-import { useParams } from "react-router-dom";
-import FetchResults from "./fetchResults";
 import { useState } from "react";
-import { getPoints, getHomePoints, getAwayPoints } from "./calculation/getPoints";
+import { useParams } from "react-router-dom";
 
 import { Grid } from '@mantine/core';
-import "./styles/style.scss";
-import { convertToDate } from "./calculation/convertToDate";
-import { getGoals, getAwayGoals, getHomeGoals } from "./calculation/getGoals";
+
+import FetchResults from "../fetchResults";
+
+import { getPoints, getHomePoints, getAwayPoints } from "../calculation/getPoints";
+import { getGoals, getAwayGoals, getHomeGoals } from "../calculation/getGoals";
+import { convertToDate } from "../calculation/convertToDate";
+import { sortByTime } from "../calculation/sortByTime";
+
+import "../styles/style.scss";
 
 let matchesCopy = [];
 
-export function Test(){
+export function PredictPage(){
     const {match,home,away} = useParams();
     const [homeTeamMatches, setHomeTeamMatches] = useState()
     const [awayTeamMatches, setAwayTeamMatches] = useState()
@@ -23,21 +27,10 @@ export function Test(){
                 resolve()
               })
         }
-          
         })
       }
 
     const matchesTab = new Array(0);
-
-
-    function sortByTime(a, b) {
-        if (a.START_TIME === b.START_TIME) {
-            return (a.START_TIME < b.START_TIME) ? -1 : 1;
-        }
-        else {
-            return (a.START_TIME > b.START_TIME) ? -1 : 1;
-        }
-    }
 
     function initalizeData(){
         if(matchesTab[0] && !homeTeamMatches && !awayTeamMatches){
@@ -97,4 +90,4 @@ export function Test(){
     )
 }
 
-export default Test
+export default PredictPage;

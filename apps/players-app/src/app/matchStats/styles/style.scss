@@ -32,3 +32,63 @@
     display: flex;
     justify-content: flex-end;
 }
+
+
+.mantine-Grid-root{
+    max-width: 1560px;
+    margin: 0 auto;
+    .mantine-Col-root{
+        background-color: #EEE3FF;
+        border: black 4px solid;
+        margin-left: -4px;
+        margin-top: -4px;
+        .clubLogo{
+            display: block;
+            margin: 0;
+        }
+
+        & img:last-of-type{
+            float:right;
+        }
+        
+        & img:first-of-type{
+            float:left;
+        }
+        
+        & a {
+            font-size: 20px;
+            color:#A61D6F;
+        }
+
+        & a, & p {
+            display: flex;
+            justify-content: center;
+            text-decoration: none;
+        }
+    }
+}
+
+@media only screen and (max-width: 1500px) {
+    .mantine-Grid-root .mantine-Col-root img {
+            height: 75px;
+            width: 75px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .mantine-Grid-root .mantine-Col-root{
+        & a{
+              font-size: 16px;
+        }
+
+        & img{
+            height: 50px;
+            width: 50px;
+        }
+    }
+}
+
+.leagueName{
+    text-align: center;
+    color: #EEE3FF;
+}

@@ -1,7 +1,6 @@
-import React, {useEffect, useState} from "react";
-import ClubAll from "../clubsStats/clubAll";
-import { convertToDate } from "../clubsStats/convertToDate";
-import {options} from './fetchOption';
+import { useEffect, useState } from "react";
+import { convertToDate } from "../calculation/convertToDate"
+import { options } from '../fetchOption';
 import { Grid } from '@mantine/core';
 
 export let teamH;
@@ -43,7 +42,7 @@ export function PageIndex(){
                     if(convertToDate(data.START_TIME).endsWith(today[daysMatch])){
                         return(
                             <Grid.Col md={4} sm={6} xs={12}>
-                                <img className="clubLogo" src={`${data.HOME_IMAGES[0]}`} alt={data.HOME_NAME} /><img src={`${data.AWAY_IMAGES[0]}`} alt={data.AWAY_NAME} /><a href={`/results/${data.EVENT_ID}/${data.HOME_PARTICIPANT_IDS[0]}/${data.AWAY_PARTICIPANT_IDS[0]}`}>{data.HOME_NAME} - {data.AWAY_NAME} <br /></a><p>{convertToDate(data.START_TIME)}</p>
+                                <img className="clubLogo" src={`${data.HOME_IMAGES[0]}`} alt={data.HOME_NAME} /><img src={`${data.AWAY_IMAGES[0]}`} alt={data.AWAY_NAME} /><a href={`/clubs/${data.EVENT_ID}/${data.HOME_PARTICIPANT_IDS[0]}/${data.AWAY_PARTICIPANT_IDS[0]}`}>{data.HOME_NAME} - {data.AWAY_NAME} <br /></a><p>{convertToDate(data.START_TIME)}</p>
                             </Grid.Col>)
                     }
                 }  
