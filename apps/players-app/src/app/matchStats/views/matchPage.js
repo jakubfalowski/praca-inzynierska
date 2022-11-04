@@ -16,6 +16,7 @@ export function PageIndex(){
         today[i] = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate()+i);
     } 
     let ifFetch = true;
+
     
     async function fetchData(query) {
         try{
@@ -37,7 +38,7 @@ export function PageIndex(){
         <>
         <h2 className="leagueName">{leagueName}</h2>
         <Grid grow>
-            { dataset !== undefined && dataset.map((data, i) => {
+            { dataset && dataset.map((data, i) => {
                 for(let daysMatch=7; daysMatch>0; daysMatch--){
                     if(convertToDate(data.START_TIME).endsWith(today[daysMatch])){
                         return(

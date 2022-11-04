@@ -9,8 +9,10 @@ import { getPoints, getHomePoints, getAwayPoints } from "../calculation/getPoint
 import { getGoals, getAwayGoals, getHomeGoals } from "../calculation/getGoals";
 import { convertToDate } from "../calculation/convertToDate";
 import { sortByTime } from "../calculation/sortByTime";
+import { getTeamStrength } from "../calculation/getTeamStrength";
 
 import "../styles/style.scss";
+
 
 let matchesCopy = [];
 
@@ -51,6 +53,7 @@ export function PredictPage(){
                     <h1>Gospodarze</h1>
                     <p>W ostatnich 15 meczach zdobyli { homeTeamMatches && getPoints(homeTeamMatches.slice(0, 15), home, away)} punktów, średnia { homeTeamMatches && (getPoints(homeTeamMatches.slice(0, 15), home, away)/15).toFixed(2)} pkt na mecz, bilans bramkowy {homeTeamMatches && getGoals(homeTeamMatches.slice(0, 15),home,away)}</p>
                     <p>W ostatnich 5 meczach u siebie zdobyli {homeTeamMatches && getHomePoints(homeTeamMatches, home)} punktów, średnia {homeTeamMatches && (getHomePoints(homeTeamMatches, home)/5).toFixed(2)} pkt na mecz bilans, bramkowy {homeTeamMatches && getHomeGoals(homeTeamMatches, home)}</p>
+                    <p>Siła tej drużyny na podstawie formy i gry u siebie: {homeTeamMatches && getTeamStrength(homeTeamMatches.slice(0, 15), home, true)}</p>
                 </Grid.Col>
 
             {
@@ -72,6 +75,7 @@ export function PredictPage(){
                     <h1>Goście</h1>
                     <p>W ostatnich 15 meczach zdobyli { awayTeamMatches && getPoints(awayTeamMatches.slice(0, 15), home, away)} punktów, średnia { awayTeamMatches && (getPoints(awayTeamMatches.slice(0, 15), home, away)/15).toFixed(2)} pkt na mecz, bilans bramkowy {awayTeamMatches && getGoals(awayTeamMatches.slice(0, 15),home,away)}</p>
                     <p>W ostatnich 5 meczach na wyjeździe zdobyli {awayTeamMatches && getAwayPoints(awayTeamMatches, away)} punktów, średnia { awayTeamMatches && (getAwayPoints(awayTeamMatches, away)/5).toFixed(2)} pkt na mecz bilans, bramkowy {awayTeamMatches && getAwayGoals(awayTeamMatches, away)}</p>
+                    <p>Siła tej drużyny na podstawie formy i gry na wyjeździe: {awayTeamMatches && getTeamStrength(awayTeamMatches.slice(0, 15), away, false)}</p>
                 </Grid.Col>
             {
                 awayTeamMatches && awayTeamMatches.slice(0, 15).map(match => (
