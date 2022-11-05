@@ -24,6 +24,5 @@ export function getWinner(homeStrength, awayStrength){
     }
     
     const ret = {home: HProbability.toFixed(2), draw: XProbability.toFixed(2), away: AProbability.toFixed(2)}
-    console.log(ret)
     return ret;
 }

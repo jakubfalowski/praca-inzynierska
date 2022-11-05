@@ -11,7 +11,8 @@ export function getGoals(allMatches, home, away){
             Agoals += parseInt(match.HOME_SCORE_CURRENT);
         } 
     })
-    return `${Hgoals}:${Agoals}`;
+    const goals = {home: Hgoals, away: Agoals}
+    return goals;
 }
 
 export function getHomeGoals(allMatches, home){
@@ -25,7 +26,8 @@ export function getHomeGoals(allMatches, home){
             i++;
         } 
     })
-    return `${Hgoals}:${Agoals}`;
+    const goals = {home: Hgoals, away: Agoals}
+    return goals;
 }
 
 export function getAwayGoals(allMatches, away){
@@ -39,5 +41,6 @@ export function getAwayGoals(allMatches, away){
             i++;
         } 
     })
-    return `${Agoals}:${Hgoals}`;
+    const goals = {home: Hgoals, away: Agoals}
+    return goals;
 }
