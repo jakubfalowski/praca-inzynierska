@@ -11,8 +11,6 @@ export function getResult(homePercent, drawPercent, awayPercent, probabilityScor
         betterLoseGoals = probabilityLoseHomeGoals;
         worseScoreGoals = probabilityScoreAwayGoals;
         worseLoseGoals = probabilityLoseAwayGoals;
-        console.log(worseLoseGoals)
-        console.log("home")
     } 
 
     if(awayPercent > homePercent && awayPercent > drawPercent){
@@ -21,7 +19,6 @@ export function getResult(homePercent, drawPercent, awayPercent, probabilityScor
         betterLoseGoals = probabilityLoseAwayGoals;
         worseScoreGoals = probabilityScoreHomeGoals;
         worseLoseGoals = probabilityLoseHomeGoals;
-        console.log("away")
     } 
 
     if(drawPercent > homePercent && drawPercent > awayPercent) probabilityWin = drawPercent;

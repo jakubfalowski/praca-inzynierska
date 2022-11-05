@@ -15,9 +15,11 @@ import { getWinner } from "../calculation/getWinner";
 import "../styles/style.scss";
 import { getAverageGoals } from "../calculation/getAverageGoals";
 import { getResult } from "../calculation/getResult";
+import FetchBet from "../fetchBet";
 
 
 let matchesCopy = [];
+let oddsTab;
 
 export function PredictPage(){
     const {match,home,away} = useParams();
@@ -33,7 +35,7 @@ export function PredictPage(){
               })
         }
         })
-      }
+    }
 
     const matchesTab = new Array(0);
 
@@ -50,26 +52,88 @@ export function PredictPage(){
     let probabilityLostGoalsByHomeTeam;
     let probabilityScoreGoalsByAwayTeam;
     let probabilityLostGoalsByAwayTeam;
-    if(homeTeamMatches && awayTeamMatches){
+    let homePercent;
+    let drawPercent;
+    let awayPercent;
+    let allPercent;
+
+    if(homeTeamMatches && awayTeamMatches && oddsTab){
         homeTeamStrength = getTeamStrength(homeTeamMatches.slice(0, 15), home, true);
         awayTeamStrength = getTeamStrength(awayTeamMatches.slice(0, 15), away, false);
         probabilityScoreGoalsByHomeTeam = (getAverageGoals(getGoals(homeTeamMatches.slice(0, 15),home,away).home,getGoals(homeTeamMatches.slice(0, 15),home,away).away,getHomeGoals(homeTeamMatches, home).home,getHomeGoals(homeTeamMatches, home).away).score).toFixed(2);
         probabilityLostGoalsByHomeTeam = (getAverageGoals(getGoals(homeTeamMatches.slice(0, 15),home,away).home,getGoals(homeTeamMatches.slice(0, 15),home,away).away,getHomeGoals(homeTeamMatches, home).home,getHomeGoals(homeTeamMatches, home).away).lost).toFixed(2);
         probabilityScoreGoalsByAwayTeam = (getAverageGoals(getGoals(awayTeamMatches.slice(0, 15),home,away).home,getGoals(awayTeamMatches.slice(0, 15),home,away).away,getAwayGoals(awayTeamMatches, away).away,getAwayGoals(awayTeamMatches, away).home).score).toFixed(2);
         probabilityLostGoalsByAwayTeam = (getAverageGoals(getGoals(awayTeamMatches.slice(0, 15),home,away).home,getGoals(awayTeamMatches.slice(0, 15),home,away).away,getAwayGoals(awayTeamMatches, away).away,getAwayGoals(awayTeamMatches, away).home).lost).toFixed(2);
+        homePercent = getWinner(homeTeamStrength, awayTeamStrength).home;
+        drawPercent = getWinner(homeTeamStrength, awayTeamStrength).draw;
+        awayPercent = getWinner(homeTeamStrength, awayTeamStrength).away;
+        allPercent = (1/parseFloat(oddsTab.home))*100+(1/parseFloat(oddsTab.draw))*100+(1/parseFloat(oddsTab.away))*100
     }
+    
 
     getMatches().then(() => {
-        matchesTab.push(matchesCopy)
-    }).then(initalizeData)
+        matchesTab.push(matchesCopy);
+    }).then(initalizeData);
+
+    new Promise ((resolve, reject) => { 
+        if(!oddsTab){
+            FetchBet(match).then((value) => {
+                oddsTab = value;
+                resolve()
+            })
+        }
+    })
 
     
+
     return(
         <div>
-            <h1>Gospodarze: {homeTeamStrength && awayTeamStrength && getWinner(homeTeamStrength, awayTeamStrength).home}</h1>
-            <h1>Remis: {homeTeamStrength && awayTeamStrength && getWinner(homeTeamStrength, awayTeamStrength).draw}</h1>
-            <h1>Goście: {homeTeamStrength && awayTeamStrength && getWinner(homeTeamStrength, awayTeamStrength).away}</h1>
-            <h1>Wynik: {homeTeamStrength && awayTeamStrength && getResult(getWinner(homeTeamStrength, awayTeamStrength).home, getWinner(homeTeamStrength, awayTeamStrength).draw, getWinner(homeTeamStrength, awayTeamStrength).away,probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByHomeTeam, probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByAwayTeam )}</h1>
+            {
+                oddsTab && homeTeamStrength && awayTeamStrength &&
+                <table>
+                    <thead>
+                        <tr>
+                            <td colSpan={4}>Moja apka</td>
+                            <td colSpan={3}>Kursy bukmacherskie</td>
+                            <td colSpan={3}>Prawdopodobieństwo bukmacher</td>
+                            <td colSpan={3}>Prawdopodobieństwo bukmacher pod zarobek</td>
+                        </tr>
+                        <tr>
+                            <td>Gospodarze</td>
+                            <td>Remis</td>
+                            <td>Goście</td>
+                            <td>Rezultat</td>
+                            <td>Gospodarze</td>
+                            <td>Remis</td>
+                            <td>Goście</td>
+                            <td>Gospodarze</td>
+                            <td>Remis</td>
+                            <td>Goście</td>
+                            <td>Gospodarze</td>
+                            <td>Remis</td>
+                            <td>Goście</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{homePercent}</td>
+                            <td>{drawPercent}</td>
+                            <td>{awayPercent}</td>
+                            <td>{getResult(homePercent, drawPercent, awayPercent,probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByHomeTeam, probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByAwayTeam)}</td>
+                            <td>{oddsTab.home}</td>
+                            <td>{oddsTab.draw}</td>
+                            <td>{oddsTab.away}</td>
+                            <td>{(((1/(parseFloat(oddsTab.home)))*100/allPercent)*100).toFixed(2)}%</td>
+                            <td>{(((1/(parseFloat(oddsTab.draw)))*100/allPercent)*100).toFixed(2)}%</td>
+                            <td>{(((1/(parseFloat(oddsTab.away)))*100/allPercent)*100).toFixed(2)}%</td>
+                            <td>{((1/(parseFloat(oddsTab.home)*88/100))*100).toFixed(2)}%</td> 
+                            <td>{((1/(parseFloat(oddsTab.draw)*88/100))*100).toFixed(2)}%</td> 
+                            <td>{((1/(parseFloat(oddsTab.away)*88/100))*100).toFixed(2)}%</td> 
+                        </tr>
+                    </tbody>
+                </table>
+            
+            }
             <Grid className="last-results left-last-results">
                 <Grid.Col span={12} className="last-results-box">
                     <h1>Gospodarze</h1>
