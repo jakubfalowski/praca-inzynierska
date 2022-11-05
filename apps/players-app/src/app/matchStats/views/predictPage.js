@@ -10,6 +10,7 @@ import { getGoals, getAwayGoals, getHomeGoals } from "../calculation/getGoals";
 import { convertToDate } from "../calculation/convertToDate";
 import { sortByTime } from "../calculation/sortByTime";
 import { getTeamStrength } from "../calculation/getTeamStrength";
+import { getWinner } from "../calculation/getWinner";
 
 import "../styles/style.scss";
 
@@ -41,6 +42,13 @@ export function PredictPage(){
         }
     }
 
+    let XD1;
+    let XD2;
+    if(homeTeamMatches && awayTeamMatches){
+        XD1 = getTeamStrength(homeTeamMatches.slice(0, 15), home, true);
+        XD2 = getTeamStrength(awayTeamMatches.slice(0, 15), away, false)
+    }
+
     getMatches().then(() => {
         matchesTab.push(matchesCopy)
     }).then(initalizeData)
@@ -48,6 +56,9 @@ export function PredictPage(){
     
     return(
         <div>
+            <h1>Gospodarze: {XD1 && XD2 && getWinner(XD1, XD2).home}</h1>
+            <h1>Remis: {XD1 && XD2 && getWinner(XD1, XD2).draw}</h1>
+            <h1>Goście: {XD1 && XD2 && getWinner(XD1, XD2).away}</h1>
             <Grid className="last-results left-last-results">
                 <Grid.Col span={12} className="last-results-box">
                     <h1>Gospodarze</h1>
@@ -76,6 +87,7 @@ export function PredictPage(){
                     <p>W ostatnich 15 meczach zdobyli { awayTeamMatches && getPoints(awayTeamMatches.slice(0, 15), home, away)} punktów, średnia { awayTeamMatches && (getPoints(awayTeamMatches.slice(0, 15), home, away)/15).toFixed(2)} pkt na mecz, bilans bramkowy {awayTeamMatches && getGoals(awayTeamMatches.slice(0, 15),home,away)}</p>
                     <p>W ostatnich 5 meczach na wyjeździe zdobyli {awayTeamMatches && getAwayPoints(awayTeamMatches, away)} punktów, średnia { awayTeamMatches && (getAwayPoints(awayTeamMatches, away)/5).toFixed(2)} pkt na mecz bilans, bramkowy {awayTeamMatches && getAwayGoals(awayTeamMatches, away)}</p>
                     <p>Siła tej drużyny na podstawie formy i gry na wyjeździe: {awayTeamMatches && getTeamStrength(awayTeamMatches.slice(0, 15), away, false)}</p>
+                    <p>Procent na wygraną </p>
                 </Grid.Col>
             {
                 awayTeamMatches && awayTeamMatches.slice(0, 15).map(match => (

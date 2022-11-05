@@ -6,7 +6,6 @@ export function getTeamStrength(lastMatches, teamID, ifHome){
         multiplier = 2 - (i/7.5);
         if(match.ODDS_WINNER === 0) strength += multiplier;
         if (teamID === match.HOME_PARTICIPANT_IDS[0] && match.ODDS_WINNER === 1 || teamID === match.AWAY_PARTICIPANT_IDS[0] && match.ODDS_WINNER === 2 ) strength += 3*multiplier;
-        console.log(multiplier, i, match.ODDS_WINNER)
     })
 
     let HAstrength = 0;
@@ -28,8 +27,6 @@ export function getTeamStrength(lastMatches, teamID, ifHome){
             }
         }
     })
-
-    console.log(HAstrength)
     
     const percentStrength = (((strength/45)*200 + (HAstrength/15)*100)/3).toFixed(2)
     return percentStrength;

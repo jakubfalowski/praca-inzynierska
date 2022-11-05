@@ -19,7 +19,7 @@ export function getHomePoints(allMatches, home){
             if(i <= 5){
                 if(match.ODDS_WINNER === 0) points += 1;
                 if(match.ODDS_WINNER === 1) points += 3;
-                console.log(i, points)
+
             }
         }
     })
@@ -35,7 +35,6 @@ export function getAwayPoints(allMatches, away){
             if(i <= 5){
                 if(match.ODDS_WINNER === 0) points += 1;
                 if(match.ODDS_WINNER === 2) points += 3;
-                console.log(i, points)
             }
         }
 

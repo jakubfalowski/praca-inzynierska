@@ -10,8 +10,6 @@ export function convertToDate(start_time){
     let amountDaysInYear;
     let amountDaysInMonth;
     let difference = start_time - 1654293600
-    // console.log(difference)
-    // console.log(start_time)
 
     for(let i = 0; i < 999; i++){
         if(year%4 === 0) amountDaysInYear = 366;
@@ -53,7 +51,6 @@ export function convertToDate(start_time){
         if(difference < 3600*24 && difference >= 3600){
             if(hour !== 23){
                 hour += 1;
-                // console.log("h+")
             }
             else{
                 hour = 0;
@@ -92,8 +89,6 @@ export function convertToDate(start_time){
         }
     }
 
-        
-        // console.log(difference+"d")
 
     if(minute < 10) minute = `0${minute}`
     // if(day < 10) day = `0${day}`
