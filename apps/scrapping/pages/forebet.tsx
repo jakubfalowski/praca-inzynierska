@@ -1,10 +1,9 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
-import { cardFB } from './cardFB';
 
 let info;
 
-export async function Forebet(team1, team2) {
+export async function Forebet() {
 
     const axiosTest = async () =>{
         const response = await axios.get('https://www.forebet.com/pl/prognozy-pi%C5%82karskie-polska/ekstraklasa');
@@ -21,7 +20,12 @@ export async function Forebet(team1, team2) {
     const awayName = [];
     const percentsAmount = [];
     const resultTab = [];
-    let numberOfRow = 0;
+    const homePercent = [];
+    const drawPercent = [];
+    const awayPercent = [];
+
+
+    const objects = {};
 
     $(homeTeam).each((i ,el) => {
         const item = $(el).text();
@@ -38,22 +42,22 @@ export async function Forebet(team1, team2) {
         if(item !== '1' && item !== 'X' && item !== '2') percentsAmount.push(item);
     })
 
+    for(let x = 0; x <= percentsAmount.length; x++){
+        if(x % 3 === 0) homePercent.push(percentsAmount[x])
+        else if(x % 3 === 1) drawPercent.push(percentsAmount[x])
+        else if(x % 3 === 2) awayPercent.push(percentsAmount[x])
+    }
+
     $(result).each((i ,el) => {
         const item = $(el).text();
         if(item !== 'Prognoza wyniku') resultTab.push(item);
     })
 
-    // eslint-disable-next-line no-inner-declarations
-    function setInfo(teamH, teamA){
-        if(homeName.indexOf(teamH) === awayName.indexOf(teamA)){
-            numberOfRow = homeName.indexOf(teamH);
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            info = {"gospodarze": homeName[numberOfRow],"goście":awayName[numberOfRow], "szanse na gospodarzy":percentsAmount[numberOfRow*3], "szanse na remis":percentsAmount[numberOfRow*3+1], "szanse na gości":percentsAmount[numberOfRow*3+2], "przewidywany wynik":resultTab[numberOfRow]}
-        }
+    for (let x = 0; x < homeName.length; x++) {
+        objects[x] = {homeName: homeName[x], awayName: awayName[x], homePercent: homePercent[x], drawPercent: drawPercent[x], awayPercent: awayPercent[x], result: resultTab[x]};
     }
-    setInfo(team1, team2);
-    console.log(info)
-    return info;
+    
+    return objects;
 }
 
 export default Forebet;
