@@ -53,7 +53,7 @@ export async function Forebet() {
         if(item !== 'Prognoza wyniku') resultTab.push(item);
     })
 
-    for (let x = 0; x < homeName.length; x++) {
+    for (let x = 0; x < resultTab.length; x++) {
         objects[x] = {homeName: homeName[x], awayName: awayName[x], homePercent: homePercent[x], drawPercent: drawPercent[x], awayPercent: awayPercent[x], result: resultTab[x]};
     }
     

@@ -1,9 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {Forebet} from '../forebet'
+import NextCors from 'nextjs-cors';
 
 export default async function ForebetAPI(req: NextApiRequest, res: NextApiResponse) {
-    // await (await Forebet('Stal Mielec', 'Slask Wroclaw')).map(teams => 
-    //     res.json({"info": teams}))
+    await NextCors(req, res, {
+        // Options
+        methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+        origin: '*',
+        optionsSuccessStatus: 200, 
+     });
     res.json(await (await Forebet()))
     
 }

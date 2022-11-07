@@ -17,21 +17,25 @@ import { getAverageGoals } from "../calculation/getAverageGoals";
 import { getResult } from "../calculation/getResult";
 import FetchBet from "../fetchBet";
 
-import { oddsHead, appHead } from "./tableHead";
+import { oddsHead, appForebetHead } from "./tableHead";
 import { dictClubs } from "../dictClubs";
+import FetchForebet from "../fetchForebet";
 
 
 let matchesCopy = [];
 let oddsTab;
-
 export function PredictPage(){
     const {match,home,away} = useParams();
-    const [homeTeamMatches, setHomeTeamMatches] = useState()
-    const [awayTeamMatches, setAwayTeamMatches] = useState()
+    const [homeTeamMatches, setHomeTeamMatches] = useState();
+    const [awayTeamMatches, setAwayTeamMatches] = useState();
+    const [forebetTab, setForebetTab] = useState();
+
+    const [homeName, setHomeName] = useState();
+    const [awayName, setAwayName] = useState();
 
     const getMatches = () => {
         return new Promise ((resolve, reject) => { 
-        if(matchesCopy.length < 1){
+        if(matchesCopy && matchesCopy.length < 1){
             FetchResults(home, away).then((value) => {
                 matchesCopy = value;
                 resolve()
@@ -87,6 +91,15 @@ export function PredictPage(){
         }
     })
 
+    new Promise ((resolve, reject) => { 
+        if(!forebetTab){
+            FetchForebet().then((value) => {
+                setForebetTab(value);
+                resolve()
+            })
+        }
+    })
+
     const oddsRows = (
         oddsTab && homeTeamStrength && awayTeamStrength &&
         <tr>
@@ -113,6 +126,7 @@ export function PredictPage(){
         </tr>
       )
 
+
     return(
         <div>
             <Table striped highlightOnHover withBorder captionSide="bottom">
@@ -121,14 +135,28 @@ export function PredictPage(){
                     <tbody>{oddsRows}</tbody>  
             </Table>
             <Table striped highlightOnHover withBorder captionSide="bottom">
+                <caption>Forebet</caption>
+                    <thead>{appForebetHead}</thead>
+                    <tbody>
+                    {
+                        forebetTab && homeName && awayName && Object.entries(forebetTab).map(bet =>{
+                            if(bet[1].homeName === homeName && bet[1].awayName === awayName){
+                                return(<tr><td>{bet[1].homePercent}</td><td>{bet[1].drawPercent}</td><td>{bet[1].awayPercent}</td><td>{bet[1].result}</td></tr>)
+                            }
+
+                        })
+                    }
+                    </tbody>  
+            </Table>
+            <Table striped highlightOnHover withBorder captionSide="bottom">
                 <caption>Moja aplikacja</caption>
-                    <thead>{appHead}</thead>
+                <thead>{appForebetHead}</thead>
                     <tbody>{appRows}</tbody>  
             </Table>
 
             <Grid className="last-results left-last-results">
                 <Grid.Col span={12} className="last-results-box">
-                    <h1>Gospodarze</h1>
+                    <h1>Gospodarze {homeName}</h1>
                     <p>W ostatnich 15 meczach zdobyli { homeTeamMatches && getPoints(homeTeamMatches.slice(0, 15), home, away)} punktów, średnia { homeTeamMatches && (getPoints(homeTeamMatches.slice(0, 15), home, away)/15).toFixed(2)} pkt na mecz, bilans bramkowy {homeTeamMatches && getGoals(homeTeamMatches.slice(0, 15),home,away).home+":"+getGoals(homeTeamMatches.slice(0, 15),home,away).away}</p>
                     <p>W ostatnich 5 meczach u siebie zdobyli {homeTeamMatches && getHomePoints(homeTeamMatches, home)} punktów, średnia {homeTeamMatches && (getHomePoints(homeTeamMatches, home)/5).toFixed(2)} pkt na mecz bilans, bramkowy {homeTeamMatches && getHomeGoals(homeTeamMatches, home).home+":"+getHomeGoals(homeTeamMatches, home).away }</p>
                     <p>Siła tej drużyny na podstawie formy i gry u siebie: {homeTeamMatches && getTeamStrength(homeTeamMatches.slice(0, 15), home, true)}</p>
@@ -136,41 +164,46 @@ export function PredictPage(){
                 </Grid.Col>
 
             {
-                homeTeamMatches && homeTeamMatches.slice(0, 15).map(match => (
-                    <Grid.Col span={12} className="last-results-box">
-                        <img className="clubLogo" src={match.HOME_IMAGES[0]} alt="Team Home" />
-                        <img className="clubLogo" src={match.AWAY_IMAGES[0]} alt="Team Away" />
-                        <a href="#top">{dictClubs(match.HOME_NAME)} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT}  ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1})  {dictClubs(match.AWAY_NAME)}</a><br />
-                        <p>{match.ROUND}</p>
-                        <p>{convertToDate(match.START_TIME)}</p>
-                    </Grid.Col>
-                ))
+                homeTeamMatches && homeTeamMatches.slice(0, 15).map(match => {
+                    if( !homeName && match.HOME_PARTICIPANT_IDS[0] === home ) setHomeName(dictClubs(match.HOME_NAME))
+                    return(
+                        <Grid.Col span={12} className="last-results-box">
+                            <img className="clubLogo" src={match.HOME_IMAGES[0]} alt="Team Home" />
+                            <img className="clubLogo" src={match.AWAY_IMAGES[0]} alt="Team Away" />
+                            <a href="#top">{dictClubs(match.HOME_NAME)} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT}  ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1})  {dictClubs(match.AWAY_NAME)}</a><br />
+                            <p>{match.ROUND}</p>
+                            <p>{convertToDate(match.START_TIME)}</p>
+                        </Grid.Col>
+                    )
+                })
             }    
 
             </Grid>
 
             <Grid className="last-results right-last-results">
                 <Grid.Col span={12} className="last-results-box">
-                    <h1>Goście</h1>
+                    <h1>Goście {awayName}</h1>
                     <p>W ostatnich 15 meczach zdobyli { awayTeamMatches && getPoints(awayTeamMatches.slice(0, 15), home, away)} punktów, średnia { awayTeamMatches && (getPoints(awayTeamMatches.slice(0, 15), home, away)/15).toFixed(2)} pkt na mecz, bilans bramkowy {awayTeamMatches && getGoals(awayTeamMatches.slice(0, 15),home,away).home+":"+getGoals(awayTeamMatches.slice(0, 15),home,away).away}</p>
                     <p>W ostatnich 5 meczach na wyjeździe zdobyli {awayTeamMatches && getAwayPoints(awayTeamMatches, away)} punktów, średnia { awayTeamMatches && (getAwayPoints(awayTeamMatches, away)/5).toFixed(2)} pkt na mecz bilans bramkowy {awayTeamMatches && getAwayGoals(awayTeamMatches, away).away+":"+getAwayGoals(awayTeamMatches, away).home}</p>
                     <p>Siła tej drużyny na podstawie formy i gry na wyjeździe: {awayTeamMatches && getTeamStrength(awayTeamMatches.slice(0, 15), away, false)}</p>
                     <p>Przewidywane bramki na wyjeździe: {awayTeamMatches &&  probabilityScoreGoalsByAwayTeam+":"+probabilityLostGoalsByAwayTeam }</p>
                 </Grid.Col>
             {
-                awayTeamMatches && awayTeamMatches.slice(0, 15).map(match => (
-                    <Grid.Col span={12} className="last-results-box">
-                        <img className="clubLogo" src={match.HOME_IMAGES[0]} alt="Team Home" />
-                        <img className="clubLogo" src={match.AWAY_IMAGES[0]} alt="Team Away" />
-                        <a href="#top">{dictClubs(match.HOME_NAME)} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT} ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1}) {dictClubs(match.AWAY_NAME)}</a><br />
-                        <p>{match.ROUND}</p>
-                        <p>{convertToDate(match.START_TIME)}</p>
-                    </Grid.Col>
-                ))
+                awayTeamMatches && awayTeamMatches.slice(0, 15).map(match =>{
+                    if( !awayName && match.AWAY_PARTICIPANT_IDS[0] === away ) setAwayName(dictClubs(match.AWAY_NAME))
+                    return(
+                        <Grid.Col span={12} className="last-results-box">
+                            <img className="clubLogo" src={match.HOME_IMAGES[0]} alt="Team Home" />
+                            <img className="clubLogo" src={match.AWAY_IMAGES[0]} alt="Team Away" />
+                            <a href="#top">{dictClubs(match.HOME_NAME)} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT} ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1}) {dictClubs(match.AWAY_NAME)}</a><br />
+                            <p>{match.ROUND}</p>
+                            <p>{convertToDate(match.START_TIME)}</p>
+                        </Grid.Col>
+                    )
+                })
             }
             </Grid>
         </div>
-        
     )
 }
 

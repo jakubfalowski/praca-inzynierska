@@ -13,8 +13,9 @@ export const oddsHead = (
     </>
 );
 
-export const appHead = (
+export const appForebetHead = (
   <tr>
       <th>1</th><th>X</th><th>2</th><th>wynik</th>
   </tr>
 )
+
