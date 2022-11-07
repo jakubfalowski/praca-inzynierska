@@ -18,6 +18,7 @@ import { getResult } from "../calculation/getResult";
 import FetchBet from "../fetchBet";
 
 import { oddsHead, appHead } from "./tableHead";
+import { dictClubs } from "../dictClubs";
 
 
 let matchesCopy = [];
@@ -111,7 +112,7 @@ export function PredictPage(){
             <td>{getResult(homePercent, drawPercent, awayPercent,probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByHomeTeam, probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByAwayTeam)}</td>
         </tr>
       )
-    
+
     return(
         <div>
             <Table striped highlightOnHover withBorder captionSide="bottom">
@@ -139,7 +140,7 @@ export function PredictPage(){
                     <Grid.Col span={12} className="last-results-box">
                         <img className="clubLogo" src={match.HOME_IMAGES[0]} alt="Team Home" />
                         <img className="clubLogo" src={match.AWAY_IMAGES[0]} alt="Team Away" />
-                        <a href="#top">{match.HOME_NAME} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT}  ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1})  {match.AWAY_NAME}</a><br />
+                        <a href="#top">{dictClubs(match.HOME_NAME)} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT}  ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1})  {dictClubs(match.AWAY_NAME)}</a><br />
                         <p>{match.ROUND}</p>
                         <p>{convertToDate(match.START_TIME)}</p>
                     </Grid.Col>
@@ -161,7 +162,7 @@ export function PredictPage(){
                     <Grid.Col span={12} className="last-results-box">
                         <img className="clubLogo" src={match.HOME_IMAGES[0]} alt="Team Home" />
                         <img className="clubLogo" src={match.AWAY_IMAGES[0]} alt="Team Away" />
-                        <a href="#top">{match.HOME_NAME} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT} ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1}) {match.AWAY_NAME}</a><br />
+                        <a href="#top">{dictClubs(match.HOME_NAME)} {match.HOME_SCORE_CURRENT}-{match.AWAY_SCORE_CURRENT} ({match.HOME_SCORE_PART_1}-{match.AWAY_SCORE_PART_1}) {dictClubs(match.AWAY_NAME)}</a><br />
                         <p>{match.ROUND}</p>
                         <p>{convertToDate(match.START_TIME)}</p>
                     </Grid.Col>
