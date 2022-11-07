@@ -104,10 +104,12 @@ export function getResult(homePercent, drawPercent, awayPercent, probabilityScor
     }
 
     else if(differenceGoals === 0){
-        const allGoals = betterLoseGoals+betterScoreGoals+worseLoseGoals+worseScoreGoals;
-        if(allGoals < 70) drawGoals = 0;
-        else if(allGoals >= 70 && allGoals <= 80) drawGoals = 1;
+        
+        const allGoals = parseInt(probabilityScoreHomeGoals) + parseInt(probabilityLoseHomeGoals) + parseInt(probabilityScoreAwayGoals) + parseInt(probabilityLoseAwayGoals);
+        if(allGoals < 2.8) drawGoals = 0;
+        else if(allGoals >= 2.8 && allGoals <= 3.2) drawGoals = 1;
         else drawGoals = 2;
+        console.log(probabilityScoreHomeGoals , probabilityLoseHomeGoals , probabilityScoreAwayGoals , probabilityLoseAwayGoals)
     }
 
     let result;

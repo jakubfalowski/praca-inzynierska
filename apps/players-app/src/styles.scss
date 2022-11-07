@@ -65,3 +65,16 @@ body{
         background-color: black
     }
 }
+
+Table.mantine-Table-root{
+    background-color: white;
+    text-align: center;
+    & thead tr th{
+        background-color: white;
+        text-align: center;
+    }
+    caption{
+        margin: 0;
+        background-color: white;
+    }
+}

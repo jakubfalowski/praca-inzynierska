@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Grid } from '@mantine/core';
+import { Grid, Table } from '@mantine/core';
 
 import FetchResults from "../fetchResults";
 
@@ -16,6 +16,8 @@ import "../styles/style.scss";
 import { getAverageGoals } from "../calculation/getAverageGoals";
 import { getResult } from "../calculation/getResult";
 import FetchBet from "../fetchBet";
+
+import { oddsHead, appHead } from "./tableHead";
 
 
 let matchesCopy = [];
@@ -84,56 +86,45 @@ export function PredictPage(){
         }
     })
 
-    
+    const oddsRows = (
+        oddsTab && homeTeamStrength && awayTeamStrength &&
+        <tr>
+            <td>{oddsTab.home}</td>
+            <td>{oddsTab.draw}</td>
+            <td>{oddsTab.away}</td>
 
+            <td>{(((1/(parseFloat(oddsTab.home)))*100/allPercent)*100).toFixed(2)}%</td>
+            <td>{(((1/(parseFloat(oddsTab.draw)))*100/allPercent)*100).toFixed(2)}%</td>
+            <td>{(((1/(parseFloat(oddsTab.away)))*100/allPercent)*100).toFixed(2)}%</td>
+
+            <td>{((1/(parseFloat(oddsTab.home)*88/100))*100).toFixed(2)}%</td> 
+            <td>{((1/(parseFloat(oddsTab.draw)*88/100))*100).toFixed(2)}%</td> 
+            <td>{((1/(parseFloat(oddsTab.away)*88/100))*100).toFixed(2)}%</td>
+        </tr>
+      );
+
+      const appRows = (
+        <tr>
+            <td>{homePercent}</td>
+            <td>{drawPercent}</td>
+            <td>{awayPercent}</td>
+            <td>{getResult(homePercent, drawPercent, awayPercent,probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByHomeTeam, probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByAwayTeam)}</td>
+        </tr>
+      )
+    
     return(
         <div>
-            {
-                oddsTab && homeTeamStrength && awayTeamStrength &&
-                <table>
-                    <thead>
-                        <tr>
-                            <td colSpan={4}>Moja apka</td>
-                            <td colSpan={3}>Kursy bukmacherskie</td>
-                            <td colSpan={3}>Prawdopodobieństwo bukmacher</td>
-                            <td colSpan={3}>Prawdopodobieństwo bukmacher pod zarobek</td>
-                        </tr>
-                        <tr>
-                            <td>Gospodarze</td>
-                            <td>Remis</td>
-                            <td>Goście</td>
-                            <td>Rezultat</td>
-                            <td>Gospodarze</td>
-                            <td>Remis</td>
-                            <td>Goście</td>
-                            <td>Gospodarze</td>
-                            <td>Remis</td>
-                            <td>Goście</td>
-                            <td>Gospodarze</td>
-                            <td>Remis</td>
-                            <td>Goście</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{homePercent}</td>
-                            <td>{drawPercent}</td>
-                            <td>{awayPercent}</td>
-                            <td>{getResult(homePercent, drawPercent, awayPercent,probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByHomeTeam, probabilityScoreGoalsByHomeTeam, probabilityLostGoalsByAwayTeam)}</td>
-                            <td>{oddsTab.home}</td>
-                            <td>{oddsTab.draw}</td>
-                            <td>{oddsTab.away}</td>
-                            <td>{(((1/(parseFloat(oddsTab.home)))*100/allPercent)*100).toFixed(2)}%</td>
-                            <td>{(((1/(parseFloat(oddsTab.draw)))*100/allPercent)*100).toFixed(2)}%</td>
-                            <td>{(((1/(parseFloat(oddsTab.away)))*100/allPercent)*100).toFixed(2)}%</td>
-                            <td>{((1/(parseFloat(oddsTab.home)*88/100))*100).toFixed(2)}%</td> 
-                            <td>{((1/(parseFloat(oddsTab.draw)*88/100))*100).toFixed(2)}%</td> 
-                            <td>{((1/(parseFloat(oddsTab.away)*88/100))*100).toFixed(2)}%</td> 
-                        </tr>
-                    </tbody>
-                </table>
-            
-            }
+            <Table striped highlightOnHover withBorder captionSide="bottom">
+                <caption>Kursy bukmacherskie</caption>
+                    <thead>{oddsHead}</thead>
+                    <tbody>{oddsRows}</tbody>  
+            </Table>
+            <Table striped highlightOnHover withBorder captionSide="bottom">
+                <caption>Moja aplikacja</caption>
+                    <thead>{appHead}</thead>
+                    <tbody>{appRows}</tbody>  
+            </Table>
+
             <Grid className="last-results left-last-results">
                 <Grid.Col span={12} className="last-results-box">
                     <h1>Gospodarze</h1>
